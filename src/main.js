@@ -21,7 +21,7 @@ Vue.use(iView);
 // 自动设置语言
 const navLang = navigator.language;
 const localLang = (navLang === 'zh-CN' || navLang === 'en-US') ? navLang : false;
-const lang = window.localStorage.getItem('language') || localLang || 'zh-CN';
+const lang = window.localStorage.getItem('language') || localLang || 'en-US';
 
 Vue.config.lang = lang;
 
@@ -42,7 +42,7 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
-    Util.title(to.meta.title);
+    Util.title(router.app.$t(to.meta.title));
     next();
 });
 

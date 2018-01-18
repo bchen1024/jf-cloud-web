@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="layout">
         <router-view></router-view>
     </div>
 </template>
@@ -21,3 +21,11 @@
         }
     };
 </script>
+<style scoped>
+    .layout{
+        position: relative;
+        overflow-y: auto;  
+        height: 100vh;
+    }
+</style>
+    
