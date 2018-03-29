@@ -1,7 +1,8 @@
 <template>
     <Layout :style="{height:'100%'}">
         <Menu mode="horizontal" theme="primary" 
-            :active-name="$store.state.currentMainMenu">
+            :active-name="$store.state.currentMainMenu"
+            style="height:48px;line-height:48px;">
             <!--Logo 应用名称-->
             <div class="layout-logo">
                 {{$t('common.appName')}}
@@ -99,8 +100,8 @@
     }
     .layout-logo{
         width: 199px;
-        height: 40px;
-        line-height: 40px;
+        height: 32px;
+        line-height: 32px;
         color:#fff;
         font-size: 24px;
         text-align: center;
@@ -124,7 +125,10 @@
         margin-left: 6px;
     }
     .layout-breadcrumb{
-        padding:12px;
+        padding-left:12px;
+        padding-right:12px;
+        height:40px;
+        line-height:40px;
     }
     .layout-center{
         padding: 0 12px 12px;

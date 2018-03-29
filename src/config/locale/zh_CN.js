@@ -19,7 +19,16 @@ export default{
         publish:'发布',
         operate:'操作',
         lastUpdatedBy:'最后更新人',
-        lastUpdationDate:'最后更新时间'
+        lastUpdationDate:'最后更新时间',
+        applyStatus:'申请状态',
+        owner:'责任人',
+        add:'添加',
+        importOrExport:'导入&导出',
+        exportSelectedItems:'导出选中项',
+        exportByCondition:'按条件导出',
+        import:'导入',
+        importIgnoreExists:'导入（忽略已存在）',
+        downloadImportTemplate:'下载导入模版',
     },
     menu:{
         system:'系统管理',
@@ -28,9 +37,9 @@ export default{
         user:'用户管理',
         role:'角色管理',
         group:'群组管理',
-        permission:'权限点管理',
-        config:'参数配置',
-        sitemap:'菜单栏目',
+        permission:'权限管理',
+        config:'系统配置',
+        sitemap:'菜单管理',
         property:'数据字典',
         lookup:'Lookup管理',
         i18n:'国际化管理',
@@ -38,9 +47,8 @@ export default{
         import:'导入监控',
         export:'导出监控'
     },
-    property:{
-        key:'字典键',
-        value:'字典值',
-        type:'字典类型'
+    role:{
+        code:'角色编码',
+        name:'角色名称'
     }
 };

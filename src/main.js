@@ -12,11 +12,13 @@ import VueI18n from 'vue-i18n';
 import Locales from './config/locale';
 import zhLocale from 'iview/src/locale/lang/zh-CN';
 import enLocale from 'iview/src/locale/lang/en-US';
+import JFView from './components/index.js';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueI18n);
 Vue.use(iView);
+Vue.use(JFView);
 
 // 自动设置语言
 const navLang = navigator.language;

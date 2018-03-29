@@ -8,34 +8,13 @@
                 </Col>
                 <Col span="16">
                     <Button type="primary" icon="ios-search">{{$t('common.search')}}</Button>
-                    <Button type="ghost" @click="toggleAdvancedSearch">{{$t('common.advancedSearch')}}</Button>
-                    <Button type="ghost">{{$t('common.reset')}}</Button>
                 </Col>
             </Row>
-            <Card v-show="showAdvancedSearch">
-                <Form inline :label-width="80" class="jf-form">
-                    <FormItem :label="$t('property.key')">
-                        <Input type="text"></Input>
-                    </FormItem>
-                    <FormItem :label="$t('property.value')">
-                        <Input type="text"></Input>
-                    </FormItem>
-                    <FormItem :label="$t('property.type')">
-                        <Select style="width:162px;">
-                            <Option value="system">系统配置</Option>
-                            <Option value="global">全局配置</Option>
-                        </Select>
-                    </FormItem>
-                    <FormItem :label="$t('common.desc')">
-                        <Input type="text"></Input>
-                    </FormItem>
-                </Form>
-            </Card>
         </Card>
         <Row class="jf-row">
         </Row>
         <!--Table列表-->
-        <Table height="400" stripe size="small" 
+        <Table style="min-height:200px;" stripe size="small" 
             :columns="grid.columns" :data="grid.result">
         </Table>
         <!--分页-->
