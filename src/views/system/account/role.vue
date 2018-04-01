@@ -10,6 +10,36 @@
                     table:{
                         columns:[
                             {type:'selection',width:60,align:'center'},
+                            {key:'operate',title:vm.$t('common.operate'),width:120,align:'center',render: (h, params) => {
+                                return h('div', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'edit',
+                                            size:14,
+                                            color:'#5cadff'
+                                        },
+                                        attrs:{
+                                            title:vm.$t('common.edit')
+                                        },
+                                        style:{
+                                            cursor: 'pointer'
+                                        }
+                                    }),
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-person-outline',
+                                            color:'#5cadff'
+                                        },
+                                        attrs:{
+                                            title:vm.$t('common.user')
+                                        },
+                                        style:{
+                                            cursor: 'pointer',
+                                            'margin-left':'3px'
+                                        }
+                                    })
+                                ]);
+                            }},
                             {key:'roleCode',title:vm.$t('role.code'),width:120,ellipsis:true,condition:true},
                             {key:'roleName',title:vm.$t('role.name'),width:150,ellipsis:true,condition:true},
                             {key:'applyStatus',title:vm.$t('common.applyStatus'),width:100},

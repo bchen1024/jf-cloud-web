@@ -21,7 +21,8 @@ export default {
                 {name:'sitemap'},
                 {name:'property'},
                 {name:'lookup'},
-                {name:'i18n'}
+                {name:'i18n'},
+                {name:'app'}
             ]},
             {name:'monitor',children:[
                 {name:'import'},
@@ -88,6 +89,12 @@ export default {
         title:'menu.i18n',
         path:'/system/config/i18n',
         component: (resolve) => require(['../../views/system/config/i18n.vue'], resolve),
+        parent:'system'
+    },
+    app:{
+        title:'menu.app',
+        path:'/system/config/app',
+        component: (resolve) => require(['../../views/system/config/app.vue'], resolve),
         parent:'system'
     },
     monitor:{

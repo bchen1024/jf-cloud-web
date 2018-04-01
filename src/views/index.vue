@@ -40,6 +40,10 @@
         </Menu>
         <!--导航面包屑-->
         <Breadcrumb class="layout-breadcrumb">
+            <div v-if="$store.state.siderMenus.length>0" style="margin-top: 5px;margin-right:6px;float:left;">
+                <Icon @click.native="openOrCloseSider" type="navicon" size="28" style="cursor: pointer;" :title="siderWidth==0?$t('common.open'):$t('common.close')"></Icon>
+            </div>
+            <template>{{$t('common.curPath')}}</template>
             <BreadcrumbItem>
                 {{$t('common.home')}}
             </BreadcrumbItem>
@@ -51,9 +55,12 @@
                     {{$t(breadcrumb.title)}}
                 </template>
             </BreadcrumbItem>
+            <div style="float:right;margin-top: 5px;">
+                <Icon type="arrow-expand" size="28" style="cursor: pointer;"></Icon>
+            </div>
         </Breadcrumb>
         <Layout class="layout-center">                        
-            <Sider :width="$store.state.siderMenus.length==0?0:200"  :style="{background: '#fff',overflow:'auto'}">
+            <Sider :width="$store.state.siderMenus.length==0?0:siderWidth"  :style="{background: '#fff',overflow:'auto'}">
                 <Menu width="auto" :style="{height:'100%'}"
                     :active-name="$store.state.currentSiderMenu"
                     :open-names="[$store.state.openMenuName]">
@@ -82,10 +89,17 @@
     export default {
         data(){
             return {
-                
+                siderWidth:200
             }
         },
         methods: {
+            openOrCloseSider(){
+                if(this.siderWidth==0){
+                    this.siderWidth=200;
+                }else{
+                    this.siderWidth=0;
+                }
+            }
         },
         created () {
             this.$store.commit('loadMainMenus');

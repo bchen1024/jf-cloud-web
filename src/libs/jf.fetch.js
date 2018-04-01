@@ -18,6 +18,7 @@ export default{
         if(op.method=='GET'){
             if(params){
                 let realParams=[];
+                realParams.push('appCode='+Config.appCode);
                 for(var key in params){
                     realParams.push(key+'='+params[key]);
                 }
@@ -27,6 +28,7 @@ export default{
             }
         }else{
             if(params){
+                params.appCode=Config.appCode;
                 op.body=JSON.stringify(params);
             }
         }
@@ -36,7 +38,7 @@ export default{
             }
             return resp.json();
         }).then(function(result){
-            if(result.httpCode){
+            if(result.status>200){
                 if(failCallback){
                     failCallback.call(this,result);
                 }else{

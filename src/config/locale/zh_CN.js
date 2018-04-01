@@ -29,6 +29,10 @@ export default{
         import:'导入',
         importIgnoreExists:'导入（忽略已存在）',
         downloadImportTemplate:'下载导入模版',
+        curPath:'当前位置：',
+        queryTip:'请输入查询条件',
+        deleteTitle:'删除确认',
+        deleteMessage:'你确认要删除选中的记录吗？'
     },
     menu:{
         system:'系统管理',
@@ -45,10 +49,25 @@ export default{
         i18n:'国际化管理',
         monitor:'系统监控',
         import:'导入监控',
-        export:'导出监控'
+        export:'导出监控',
+        app:'应用管理'
     },
     role:{
         code:'角色编码',
         name:'角色名称'
+    },
+    app:{
+        code:'应用编码',
+        name:'应用名称'
+    },
+    property:{
+        key:'字典键',
+        value:'字典值',
+        type:'字段类型'
+    },
+    i18n:{
+        key:'键值',
+        cn:'中文',
+        en:'英文'
     }
 };
