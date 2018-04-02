@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--工具栏，存在工具栏按钮或者支持搜索渲染-->
-        <Row v-if="(toolbars && toolbars.length>0) || table.queryFields.length>0" 
+        <Row v-if="(toolbars && toolbars.length>0) || table.queryFields.length>0 || table.setting" 
              class="jf-toolbar" type="flex" justify="start">
             <!--普通按钮-->
             <Button v-if="!bar.items || bar.items.length==0"  
@@ -43,11 +43,16 @@
                         </Option>
                     </Select>
             </Input>
+            <span v-if="table.setting" style="margin-start:auto">
+                <Icon type="ios-gear-outline" size="20" 
+                 style="margin-top:12px;margin-right:3px;cursor: pointer;" :title="$t('common.setting')" @click.native="openSetting"></Icon>
+            </span>
         </Row>
         <!--Table列表-->
         <Table border stripe size="small"
             :columns="table.columns" :data="table.data"  
             :loading="table.loading"
+            :no-data-text="table.noDataText"
             @on-selection-change="selectionChange">
         </Table>
         <!--分页-->
@@ -71,6 +76,19 @@
             </div>
             <div slot="footer">
                 <Button type="error" size="large" long :loading="deleteOp.loading" @click="doDelete">{{deleteOp.btnText}}</Button>
+            </div>
+        </Modal>
+
+        <!--表格设置modal-->
+        <Modal v-if="table.setting" v-model="table.settingShow" width="800" :title="$t('common.setting')">
+            <Table border stripe size="small"
+                :columns="settingTable.columns" :data="table.columns"  
+                >
+            </Table>
+            <div slot="footer">
+                <Button type="primary" >{{$t('common.ok')}}</Button>
+                <Button type="error" @click="table.settingShow=false">{{$t('common.cancel')}}</Button>
+                <Button type="info" >{{$t('common.reset')}}</Button>
             </div>
         </Modal>
     </div>
@@ -98,6 +116,15 @@
                     queryParams:{},
                     queryKey:"",
                     queryValue:""
+                },
+                settingTable:{
+                    columns:[
+                        {key:'key',title:vm.$t('common.field')},
+                        {key:'title',title:vm.$t('common.title')},
+                        {key:'hidden',title:vm.$t('common.hidden')},
+                        {key:'fixed',title:vm.$t('common.fixed')},
+                        {key:'width',title:vm.$t('common.width')}
+                    ]
                 }
             }
         },
@@ -185,13 +212,17 @@
                         });
                     });
                 }
+            },
+            openSetting(){
+                this.table.settingShow=true;
             }
         },
         created(){
             var options=this.gridOptions || {};
             //设置表格配置
             this.table=Object.assign({},{
-                columns:[],data:[],loading:false,showPager:true
+                columns:[],data:[],loading:false,setting:true,settingShow:false,
+                showPager:true,noDataText:this.$t('common.noDataText')
             },options.table);
 
             //设置分页配置

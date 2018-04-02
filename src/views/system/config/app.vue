@@ -34,10 +34,11 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-app/app/mgt/page'
+                        url:'jfcloud/jf-cloud-config/config/app/page',
+                        queryParams:{removeCode:true}
                     },
                     delete:{
-                        url:'jfcloud/jf-cloud-app/app/mgt/batch/delete'
+                        url:'jfcloud/jf-cloud-config/config/app/batch/delete'
                     },
                     toolbars:[
                         {refs:'addApp',title:vm.$t('common.add'),icon:'plus'},

@@ -45,10 +45,6 @@
                             {key:'applyStatus',title:vm.$t('common.applyStatus'),width:100},
                             {key:'roleOwner',title:vm.$t('common.owner'),width:120,ellipsis:true},
                             {key:'roleDesc',title:vm.$t('common.desc'),ellipsis:true}
-                        ],
-                        data:[
-                            {roleCode:'admin',roleName:'系统管理员',applyStatus:'N',roleOwner:100001,roleDesc:'系统管理员，拥有系统所有权限'},
-                            {roleCode:'config',roleName:'参数配置员',applyStatus:'Y',roleOwner:100001,roleDesc:'系统参数配置员，拥有配置支撑系统正常运行的系统参数'}
                         ]
                     },
                     toolbars:[

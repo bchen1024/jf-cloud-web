@@ -1,11 +1,12 @@
 <template>
     <Layout :style="{height:'100%'}">
-        <Menu mode="horizontal" theme="primary" 
+        <Menu v-show="showMenu" mode="horizontal" theme="primary" 
             :active-name="$store.state.currentMainMenu"
             style="height:48px;line-height:48px;">
             <!--Logo 应用名称-->
             <div class="layout-logo">
                 {{$t('common.appName')}}
+                <Icon v-if="$store.state.siderMenus.length>0" @click.native="openOrCloseSider" type="navicon" size="28" style="cursor: pointer;float:right;margin-top:2px;" :title="siderWidth==0?$t('common.open'):$t('common.close')"></Icon>
             </div>
             <!--主菜单-->
             <div class="layout-nav">
@@ -40,9 +41,6 @@
         </Menu>
         <!--导航面包屑-->
         <Breadcrumb class="layout-breadcrumb">
-            <div v-if="$store.state.siderMenus.length>0" style="margin-top: 5px;margin-right:6px;float:left;">
-                <Icon @click.native="openOrCloseSider" type="navicon" size="28" style="cursor: pointer;" :title="siderWidth==0?$t('common.open'):$t('common.close')"></Icon>
-            </div>
             <template>{{$t('common.curPath')}}</template>
             <BreadcrumbItem>
                 {{$t('common.home')}}
@@ -56,7 +54,10 @@
                 </template>
             </BreadcrumbItem>
             <div style="float:right;margin-top: 5px;">
-                <Icon type="arrow-expand" size="28" style="cursor: pointer;"></Icon>
+                <Icon @click.native="maxOrNoraml" 
+                    :type="showMenu?'arrow-expand':'arrow-shrink'" size="28"
+                    :title="showMenu?$t('common.max'):$t('common.noraml')"
+                     style="cursor: pointer;"></Icon>
             </div>
         </Breadcrumb>
         <Layout class="layout-center">                        
@@ -84,21 +85,25 @@
     </Layout>
 </template>
 <script>
-    import util from  '../libs/util.js';
-    import menus from  '../config/menus/index.js';
     export default {
         data(){
             return {
-                siderWidth:200
+                siderWidth:200,
+                showMenu:true
             }
         },
         methods: {
+            //打开关闭左侧菜单
             openOrCloseSider(){
                 if(this.siderWidth==0){
                     this.siderWidth=200;
                 }else{
                     this.siderWidth=0;
                 }
+            },
+            //显示隐藏主菜单
+            maxOrNoraml(){
+                this.showMenu=!this.showMenu;
             }
         },
         created () {
@@ -122,7 +127,7 @@
         border-radius: 3px;
         float: left;
         position: relative;
-        top: 10px;
+        top: 8px;
     }
     .layout-nav{
         margin: 0 auto;

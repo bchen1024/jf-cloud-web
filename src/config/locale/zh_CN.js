@@ -6,7 +6,11 @@ export default{
         logout:'注销',
         search:'搜索',
         advancedSearch:'高级搜索',
-        reset:'清空',
+        reset:'重置',
+        clear:'清空',
+        ok:'确定',
+        cancel:'取消',
+        setting:'设置',
         globalSearch:'模糊搜索，不区分大小写',
         cache:'缓存',
         desc:'描述',
@@ -32,7 +36,17 @@ export default{
         curPath:'当前位置：',
         queryTip:'请输入查询条件',
         deleteTitle:'删除确认',
-        deleteMessage:'你确认要删除选中的记录吗？'
+        deleteMessage:'你确认要删除选中的记录吗？',
+        open:'打开',
+        close:'关闭',
+        noDataText:'无符合条件的数据',
+        max:'最大化',
+        noraml:'正常',
+        field:'字段',
+        title:'标题',
+        width:'宽度',
+        hidden:'隐藏',
+        fixed:'冻结'
     },
     menu:{
         system:'系统管理',
@@ -69,5 +83,11 @@ export default{
         key:'键值',
         cn:'中文',
         en:'英文'
+    },
+    code:{
+        no:'Lookup编码',
+        name:'Lookup名称',
+        type:'Lookup类型',
+        parent:'父编码'
     }
 };

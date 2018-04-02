@@ -18,7 +18,10 @@ export default{
         if(op.method=='GET'){
             if(params){
                 let realParams=[];
-                realParams.push('appCode='+Config.appCode);
+                if(!params.removeCode){
+                    realParams.push('appCode='+Config.appCode);
+                }
+                delete params.removeCode;
                 for(var key in params){
                     realParams.push(key+'='+params[key]);
                 }
@@ -28,7 +31,10 @@ export default{
             }
         }else{
             if(params){
-                params.appCode=Config.appCode;
+                if(!params.removeCode){
+                    params.appCode=Config.appCode;
+                }
+                delete params.removeCode;
                 op.body=JSON.stringify(params);
             }
         }

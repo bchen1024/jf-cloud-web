@@ -9,8 +9,8 @@
                 grid:{
                     table:{
                         columns:[
-                            {type:'selection',width:60,align:'center'},
-                            {key:'propertyKey',title:vm.$t('property.key'),width:150,ellipsis:true,condition:true},
+                            {type:'selection',width:60,align:'center',fixed:'left'},
+                            {key:'propertyKey',title:vm.$t('property.key'),width:150,ellipsis:true,condition:true,fixed:'left'},
                             {key:'propertyValue',title:vm.$t('property.value'),width:150,ellipsis:true,condition:true},
                             {key:'propertyType',title:vm.$t('property.type'),width:120,ellipsis:true},
                             {key:'attr1',title:vm.$t('common.attr1'),width:120,ellipsis:true},
