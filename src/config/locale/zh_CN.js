@@ -46,7 +46,10 @@ export default{
         title:'标题',
         width:'宽度',
         hidden:'隐藏',
-        fixed:'冻结'
+        fixed:'冻结',
+        show:'显示',
+        checkbox:'多选框',
+        save:'保存'
     },
     menu:{
         system:'系统管理',

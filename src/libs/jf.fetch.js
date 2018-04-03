@@ -9,7 +9,7 @@ export default{
                 'Accept':'application/json',
                 'Content-type':'application/json',
                 'currentLanguage':localStorage.getItem('currentLanguage')||'zh_CN',
-                'Authorization':sessionStorage.token
+                'Authorization':sessionStorage.token,
             }
         };
         let baseUrl=Config.serviceUrl;

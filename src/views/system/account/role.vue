@@ -47,8 +47,24 @@
                             {key:'roleDesc',title:vm.$t('common.desc'),ellipsis:true}
                         ]
                     },
+                    search:{
+                        url:'jfcloud/jf-cloud-security/security/role/page'
+                    },
+                    form:{
+                        ref:'roleForm',
+                        items:[
+                            {key:'roleCode',title:vm.$t('role.code')},
+                            {key:'roleName',title:vm.$t('role.name')},
+                            {key:'applyStatus',title:vm.$t('common.applyStatus')},
+                            {key:'roleOwner',title:vm.$t('common.owner')},
+                            {key:'roleDesc',title:vm.$t('common.desc')}
+                        ],
+                        rules:{
+                            roleCode:{required: true, message: 'The name cannot be empty', trigger: 'blur'}
+                        }
+                    },
                     toolbars:[
-                        {refs:'addRole',title:vm.$t('common.add'),icon:'plus'},
+                        {refs:'addRole',title:vm.$t('common.add'),icon:'plus',add:true},
                         {refs:'deleteRole',title:vm.$t('common.delete'),icon:'ios-trash-outline',type:'error',selection:true},
                         {title:vm.$t('common.importOrExport'),items:[
                             {title:vm.$t('common.exportSelectedItems'),selection:true},

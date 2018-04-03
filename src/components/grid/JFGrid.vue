@@ -91,6 +91,40 @@
                 <Button type="info" >{{$t('common.reset')}}</Button>
             </div>
         </Modal>
+
+        <!--表单设置modal-->
+        <Modal v-if="form.items && form.items.length>0" v-model="form.show" :width="form.width || 600" 
+            :title="form.title">
+            <Form :ref="form.ref" :model="form.data || {}" :rules="form.rules || {}" :label-width="form.labelWidth || 100">
+                <Form-item v-for='item in form.items' :key='item.key' :label="item.title" :prop="item.key">
+                    <!--Select下拉框组件-->
+                    <template v-if='item.type=="select"'>
+                        <Select v-model="form.data[item.key]">
+                            <Option v-for='option in item.options' :key='option.value' :value='option.value'>
+                                {{option.text}}
+                            </Option>
+                        </Select>
+                    </template>
+                    <!--Radio组件-->
+                    <template v-else-if='item.type=="radio"'>
+                        <RadioGroup v-model="form.data[item.key]">
+                            <Radio v-for='option in item.options' :key='option.value' :label='option.value'>
+                                {{option.text}}
+                            </Radio>
+                        </RadioGroup>
+                    </template>
+                    <!--Input组件-->
+                    <template v-else>
+                        <Input v-model="form.data[item.key]"></Input>
+                    </template>
+                </Form-item>
+            </Form>
+            <div slot="footer">
+                <Button type="primary" @click="doSave">{{$t('common.save')}}</Button>
+                <Button type="error" @click="form.show=false">{{$t('common.cancel')}}</Button>
+                <Button type="info" @click="doReset">{{$t('common.reset')}}</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 <script>
@@ -117,13 +151,48 @@
                     queryKey:"",
                     queryValue:""
                 },
+                form:{},
                 settingTable:{
                     columns:[
                         {key:'key',title:vm.$t('common.field')},
-                        {key:'title',title:vm.$t('common.title')},
-                        {key:'hidden',title:vm.$t('common.hidden')},
-                        {key:'fixed',title:vm.$t('common.fixed')},
-                        {key:'width',title:vm.$t('common.width')}
+                        {key:'title',title:vm.$t('common.title'),render:(h,params)=>{
+                            if(params.row.type=='selection'){
+                                return vm.$t('common.checkbox')
+                            }
+                            return params.row.title;
+                        }},
+                        {key:'hidden',title:vm.$t('common.show'),align:'center',render:(h,params)=>{
+                            var type='checkmark',color='green';
+                            if(params.row.hidden){
+                                type='close';
+                                color='red';
+                            }
+                            return h('Icon', {
+                                props: {
+                                    type: type,
+                                    size:14,
+                                    color:color
+                                }
+                            });
+                        }},
+                        {key:'fixed',title:vm.$t('common.fixed'),align:'center',render:(h,params)=>{
+                            if(params.row.fixed){
+                                return params.row.fixed;
+                            }
+                            return h('Icon', {
+                                props: {
+                                    type: 'close',
+                                    size:14,
+                                    color:'red'
+                                }
+                            });
+                        }},
+                        {key:'width',title:vm.$t('common.width'),render:(h,params)=>{
+                            if(params.row.width){
+                                return params.row.width;
+                            }
+                            return 'auto';
+                        }}
                     ]
                 }
             }
@@ -175,6 +244,9 @@
             btnClick(bar){
                 if(bar.delete){
                     this.gridDelete(bar);
+                }else if(bar.add){
+                    this.form.type='add';
+                    this.form.show=true;
                 }
             },
             gridDelete(bar){
@@ -213,6 +285,16 @@
                     });
                 }
             },
+            doReset(){
+                if(this.form.type='add'){
+                    this.$refs[this.form.ref].resetFields();
+                }
+            },
+            doSave(){
+                if(this.form.type='add'){
+                    this.$Modal.info('dfsd')
+                }
+            },
             openSetting(){
                 this.table.settingShow=true;
             }
@@ -239,6 +321,11 @@
             //查询配置
             this.searchOp=Object.assign({},this.searchOp,options.search);
 
+            //表单配置
+            this.form=Object.assign({},{
+                show:false,items:[],title:this.$t('common.add'),data:{},rules:{}
+            },options.form);
+
             //查询
             var queryFields=[];
             this.table.columns.forEach(element => {
@@ -251,8 +338,6 @@
                 this.searchOp.queryKey=queryFields[0].key;
             }
             
-            
-
             //自动查询
             if(this.searchOp.autoLoad){
                 this.load();
