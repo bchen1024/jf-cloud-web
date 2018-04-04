@@ -1,9 +1,7 @@
 import JFGrid from './grid/JFGrid.vue';
-import JFDelete from './deleteConfirm/JFDelete.vue';
 
 const jfviews={
-    JFGrid,
-    JFDelete
+    JFGrid
 };
 
 const install=function(Vue){

@@ -22,6 +22,8 @@ export default{
         status:'状态',
         publish:'发布',
         operate:'操作',
+        createdBy:'创建人',
+        creationDate:'创建时间',
         lastUpdatedBy:'最后更新人',
         lastUpdationDate:'最后更新时间',
         applyStatus:'申请状态',
@@ -49,7 +51,13 @@ export default{
         fixed:'冻结',
         show:'显示',
         checkbox:'多选框',
-        save:'保存'
+        save:'保存',
+        canApply:'可申请',
+        notApply:'不可申请',
+        deleteSuccessful:'删除成功',
+        deleteError:'删除错误',
+        saveSuccessful:'保存成功',
+        saveError:'保存错误'
     },
     menu:{
         system:'系统管理',

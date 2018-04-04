@@ -62,7 +62,7 @@
         </Breadcrumb>
         <Layout class="layout-center">                        
             <Sider :width="$store.state.siderMenus.length==0?0:siderWidth"  :style="{background: '#fff',overflow:'auto'}">
-                <Menu width="auto" :style="{height:'100%'}"
+                <Menu width="auto" :style="{height:'100%'}" accordion
                     :active-name="$store.state.currentSiderMenu"
                     :open-names="[$store.state.openMenuName]">
                     <Submenu v-for="subMenu in $store.state.siderMenus" :name="subMenu.name" :key="subMenu.name">

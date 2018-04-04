@@ -40,8 +40,24 @@
                     delete:{
                         url:'jfcloud/jf-cloud-config/config/app/batch/delete'
                     },
+                    form:{
+                        ref:'formApp',
+                        createUrl:'jfcloud/jf-cloud-config/config/app/create',
+                        updateUrl:'jfcloud/jf-cloud-config/config/app/update',
+                        items:[
+                            {key:'appCode',title:vm.$t('app.code')},
+                            {key:'appName',title:vm.$t('app.name')},
+                            {key:'appOwner',title:vm.$t('common.owner')},
+                            {key:'appDesc',title:vm.$t('common.desc'),type:'textarea'}
+                        ],
+                        rules:{
+                            appCode:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
+                            appName:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
+                            appOwner:{required: true, message: 'The name cannot be empty', trigger: 'blur'}
+                        }
+                    },
                     toolbars:[
-                        {refs:'addApp',title:vm.$t('common.add'),icon:'plus'},
+                        {refs:'addApp',title:vm.$t('common.add'),icon:'plus',add:true},
                         {refs:'deleteApp',title:vm.$t('common.delete'),
                             icon:'ios-trash-outline',type:'error',
                             selection:true,delete:true

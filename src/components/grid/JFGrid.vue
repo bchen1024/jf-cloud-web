@@ -50,7 +50,7 @@
         </Row>
         <!--Table列表-->
         <Table border stripe size="small"
-            :columns="table.columns" :data="table.data"  
+            :columns="columns" :data="table.data"  
             :loading="table.loading"
             :no-data-text="table.noDataText"
             @on-selection-change="selectionChange">
@@ -95,7 +95,8 @@
         <!--表单设置modal-->
         <Modal v-if="form.items && form.items.length>0" v-model="form.show" :width="form.width || 600" 
             :title="form.title">
-            <Form :ref="form.ref" :model="form.data || {}" :rules="form.rules || {}" :label-width="form.labelWidth || 100">
+            <Form :ref="form.ref" :model="form.data || {}" :rules="form.rules || {}" 
+                :label-width="form.labelWidth || 100" :inline="form.inline || false">
                 <Form-item v-for='item in form.items' :key='item.key' :label="item.title" :prop="item.key">
                     <!--Select下拉框组件-->
                     <template v-if='item.type=="select"'>
@@ -113,6 +114,10 @@
                             </Radio>
                         </RadioGroup>
                     </template>
+                    <!--Textarea组件-->
+                    <template v-else-if='item.type=="textarea"'>
+                        <Input v-model="form.data[item.key]" type='textarea' :rows="4"></Input>
+                    </template>
                     <!--Input组件-->
                     <template v-else>
                         <Input v-model="form.data[item.key]"></Input>
@@ -120,9 +125,9 @@
                 </Form-item>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="doSave">{{$t('common.save')}}</Button>
+                <Button type="primary" @click="doSave" :loading="form.saveLoding">{{$t('common.save')}}</Button>
                 <Button type="error" @click="form.show=false">{{$t('common.cancel')}}</Button>
-                <Button type="info" @click="doReset">{{$t('common.reset')}}</Button>
+                <Button type="info" @click="doReset" :loading="form.loading">{{$t('common.reset')}}</Button>
             </div>
         </Modal>
     </div>
@@ -197,6 +202,19 @@
                 }
             }
         },
+        computed:{
+            columns(){
+                var columns=[];
+                if(this.table.columns.length>0){
+                    this.table.columns.forEach(column=>{
+                        if(!column.hidden){
+                            columns.push(column);
+                        }
+                    });
+                }
+                return columns;
+            }
+        },
         methods:{
             load(params,reload){
                 let vue=this;
@@ -246,6 +264,7 @@
                     this.gridDelete(bar);
                 }else if(bar.add){
                     this.form.type='add';
+                    this.form.data=this.form.defaultValue||{};
                     this.form.show=true;
                 }
             },
@@ -291,9 +310,34 @@
                 }
             },
             doSave(){
-                if(this.form.type='add'){
-                    this.$Modal.info('dfsd')
-                }
+                var vm=this;
+                this.$refs[this.form.ref].validate((valid) => {
+                    if (valid) {
+                        var formData=JSON.parse(JSON.stringify(vm.form.data));
+                        var url=vm.form.createUrl;
+                        var method='POST';
+                        if(vm.form.type=='edit'){
+                            url=vm.form.updateUrl;
+                            method="PUT";
+                        }
+                        vm.form.saveLoading=true;
+                        JFFetch.doRequest(method,url,formData,function(result){
+                            vm.form.data={};
+                            vm.form.saveLoading=false;
+                            vm.form.show=false;
+                            vm.$Message.success(vm.$t('common.saveSuccessful'));
+                            vm.load();
+                        },function(error){
+                            vm.form.data={};
+                            vm.form.show=false;
+                            vm.form.saveLoading=false;
+                            vm.$Message.error({
+                                content:vm.$t('common.saveError'),
+                                duration:10
+                            });
+                        });
+                    }
+                })
             },
             openSetting(){
                 this.table.settingShow=true;
@@ -303,9 +347,24 @@
             var options=this.gridOptions || {};
             //设置表格配置
             this.table=Object.assign({},{
-                columns:[],data:[],loading:false,setting:true,settingShow:false,
+                columns:[],data:[],loading:false,setting:true,settingShow:false,defaultColumn:true,
                 showPager:true,noDataText:this.$t('common.noDataText')
             },options.table);
+            if(this.table.defaultColumn){
+                this.table.columns.push(
+                    {key:'createUserName',title:this.$t('common.createdBy'),width:150,ellipsis:true,hidden:true},
+                    {key:'creationDate',title:this.$t('common.creationDate'),width:160,ellipsis:true,hidden:true},
+                    {key:'lastUpdateUserName',title:this.$t('common.lastUpdatedBy'),width:150,ellipsis:true,hidden:true},
+                    {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:160,ellipsis:true,hidden:true}
+                );
+                if(this.columns.length>8){
+                    this.table.columns.forEach(column=>{
+                        if(!column.width){
+                            column.width=250;
+                        }
+                    });
+                }
+            }
 
             //设置分页配置
             this.pager=Object.assign({},{
@@ -323,7 +382,7 @@
 
             //表单配置
             this.form=Object.assign({},{
-                show:false,items:[],title:this.$t('common.add'),data:{},rules:{}
+                show:false,items:[],title:this.$t('common.add'),data:{},rules:{},saveLoading:false,loading:false
             },options.form);
 
             //查询
