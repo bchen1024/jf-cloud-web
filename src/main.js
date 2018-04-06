@@ -44,8 +44,14 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
-    Util.title(router.app.$t(to.meta.title));
-    next();
+    if(to.name=='index'){
+        next({
+            path:'/home'
+        });
+    }else{
+        Util.title(router.app.$t(to.meta.title));
+        next();
+    }
 });
 
 router.afterEach((to) => {
@@ -119,6 +125,9 @@ const store = new Vuex.Store({
                     if(childrens && childrens.length>0){
                         var c=[];
                         for(var sub of childrens){
+                            if(!menus[sub.name] || menus[sub.name].permission){
+                                continue;
+                            }
                             var subObj={
                                 name:sub.name,
                                 title:menus[sub.name].title
@@ -139,7 +148,9 @@ const store = new Vuex.Store({
                         }
                         menuObj.children=c;
                     }
-                    siderMenus.push(menuObj);
+                    if(menuObj.children.length>0){
+                        siderMenus.push(menuObj);
+                    }
                 }
             }
 

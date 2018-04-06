@@ -1,5 +1,5 @@
 <template>
-    <JFGrid :gridOptions='grid'/>
+    <JFGrid :gridOptions='grid' ref="gridApp"/>
 </template>
 <script>
     export default {
@@ -12,19 +12,14 @@
                             {type:'selection',width:60,align:'center'},
                             {key:'operate',title:vm.$t('common.operate'),width:120,align:'center',render: (h, params) => {
                                 return h('div', [
-                                    h('Icon', {
-                                        props: {
-                                            type: 'edit',
-                                            size:14,
-                                            color:'#5cadff'
-                                        },
-                                        attrs:{
-                                            title:vm.$t('common.edit')
-                                        },
-                                        style:{
-                                            cursor: 'pointer'
+                                    h('Button', {
+                                        props: {type: 'primary',size: 'small',icon:'edit'},
+                                        on:{
+                                            click:()=>{
+                                                vm.$refs.gridApp.openFormModal(params.row);
+                                            }
                                         }
-                                    })
+                                    },this.$t('common.edit'))
                                 ]);
                             }},
                             {key:'appCode',title:vm.$t('app.code'),width:150,ellipsis:true,condition:true},

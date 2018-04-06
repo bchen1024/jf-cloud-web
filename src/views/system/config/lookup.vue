@@ -1,5 +1,5 @@
 <template>
-    <JFGrid :gridOptions='grid'/>
+    <JFGrid :gridOptions='grid' ref="gridLookup"/>
 </template>
 <script>
     export default {
@@ -10,6 +10,18 @@
                     table:{
                         columns:[
                             {type:'selection',width:60,align:'center'},
+                            {key:'operate',title:vm.$t('common.operate'),width:120,align:'center',render: (h, params) => {
+                                return h('div', [
+                                    h('Button', {
+                                        props: {type: 'primary',size: 'small',icon:'edit'},
+                                        on:{
+                                            click:()=>{
+                                                vm.$refs.gridLookup.openFormModal(params.row);
+                                            }
+                                        }
+                                    },this.$t('common.edit'))
+                                ]);
+                            }},
                             {key:'codeNo',title:vm.$t('code.no'),width:150,ellipsis:true,condition:true},
                             {key:'codeName',title:vm.$t('code.name'),width:150,ellipsis:true,condition:true},
                             {key:'codeType',title:vm.$t('code.type'),width:120,ellipsis:true},

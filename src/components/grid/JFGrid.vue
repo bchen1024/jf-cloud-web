@@ -94,10 +94,12 @@
 
         <!--表单设置modal-->
         <Modal v-if="form.items && form.items.length>0" v-model="form.show" :width="form.width || 600" 
-            :title="form.title">
+            :title="form.title"
+            :styles="{top: '48px'}">
             <Form :ref="form.ref" :model="form.data || {}" :rules="form.rules || {}" 
                 :label-width="form.labelWidth || 100" :inline="form.inline || false">
-                <Form-item v-for='item in form.items' :key='item.key' :label="item.title" :prop="item.key">
+                <Form-item v-for='item in form.items' :key='item.key' :label="item.title" :prop="item.key"
+                    :inline="item.inline || false">
                     <!--Select下拉框组件-->
                     <template v-if='item.type=="select"'>
                         <Select v-model="form.data[item.key]">
@@ -116,7 +118,7 @@
                     </template>
                     <!--Textarea组件-->
                     <template v-else-if='item.type=="textarea"'>
-                        <Input v-model="form.data[item.key]" type='textarea' :rows="4"></Input>
+                        <Input :inline="item.inline || false" v-model="form.data[item.key]" type='textarea' :rows="4"></Input>
                     </template>
                     <!--Input组件-->
                     <template v-else>
@@ -263,6 +265,15 @@
                 if(bar.delete){
                     this.gridDelete(bar);
                 }else if(bar.add){
+                    this.openFormModal();
+                }
+            },
+            openFormModal(data){
+                if(data){
+                    this.form.type='edit';
+                    this.form.data=data||{};
+                    this.form.show=true;
+                }else{
                     this.form.type='add';
                     this.form.data=this.form.defaultValue||{};
                     this.form.show=true;
@@ -305,7 +316,7 @@
                 }
             },
             doReset(){
-                if(this.form.type='add'){
+                if(this.form.type=='add'){
                     this.$refs[this.form.ref].resetFields();
                 }
             },
@@ -384,6 +395,14 @@
             this.form=Object.assign({},{
                 show:false,items:[],title:this.$t('common.add'),data:{},rules:{},saveLoading:false,loading:false
             },options.form);
+            if(this.form.items.length>6){
+                this.form.inline=true;
+            }
+            if(this.form.items.length>9){
+                this.form.width=900;
+            }if(this.form.items.length>18){
+                this.form.width=1200;
+            }
 
             //查询
             var queryFields=[];

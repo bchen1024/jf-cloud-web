@@ -1,5 +1,5 @@
 <template>
-    <JFGrid :gridOptions='grid'/>
+    <JFGrid :gridOptions='grid' ref="gridRole"/>
 </template>
 <script>
     export default {
@@ -13,32 +13,14 @@
                             {type:'selection',width:60,align:'center'},
                             {key:'operate',title:vm.$t('common.operate'),width:120,align:'center',render: (h, params) => {
                                 return h('div', [
-                                    h('Icon', {
-                                        props: {
-                                            type: 'edit',
-                                            size:14,
-                                            color:'#5cadff'
-                                        },
-                                        attrs:{
-                                            title:vm.$t('common.edit')
-                                        },
-                                        style:{
-                                            cursor: 'pointer'
+                                    h('Button', {
+                                        props: {type: 'primary',size: 'small',icon:'edit'},
+                                        on:{
+                                            click:()=>{
+                                                vm.$refs.gridRole.openFormModal(params.row);
+                                            }
                                         }
-                                    }),
-                                    h('Icon', {
-                                        props: {
-                                            type: 'ios-person-outline',
-                                            color:'#5cadff'
-                                        },
-                                        attrs:{
-                                            title:vm.$t('common.user')
-                                        },
-                                        style:{
-                                            cursor: 'pointer',
-                                            'margin-left':'3px'
-                                        }
-                                    })
+                                    },this.$t('common.edit'))
                                 ]);
                             }},
                             {key:'roleCode',title:vm.$t('role.code'),width:120,ellipsis:true,condition:true},

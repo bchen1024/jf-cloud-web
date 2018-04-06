@@ -75,7 +75,15 @@ export default{
         monitor:'系统监控',
         import:'导入监控',
         export:'导出监控',
-        app:'应用管理'
+        app:'应用管理',
+        myImportOrExport:'我的导入导出',
+        myImport:'我的导入',
+        myExport:'我的导出',
+        myWorkTodo:'我的工作代办',
+        myTodo:'我的代办',
+        myApply:'我的申请',
+        myApprove:'我的审批',
+        myWorkflow:'我的流程',
     },
     role:{
         code:'角色编码',
@@ -100,5 +108,9 @@ export default{
         name:'Lookup名称',
         type:'Lookup类型',
         parent:'父编码'
+    },
+    group:{
+        code:'群组编码',
+        name:'群组名称'
     }
 };
