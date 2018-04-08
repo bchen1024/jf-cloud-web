@@ -271,7 +271,7 @@
             openFormModal(data){
                 if(data){
                     this.form.type='edit';
-                    this.form.data=data||{};
+                    this.form.data=Object.assign({},this.form.defaultValue,data);
                     this.form.show=true;
                 }else{
                     this.form.type='add';
@@ -364,9 +364,9 @@
             if(this.table.defaultColumn){
                 this.table.columns.push(
                     {key:'createUserName',title:this.$t('common.createdBy'),width:150,ellipsis:true,hidden:true},
-                    {key:'creationDate',title:this.$t('common.creationDate'),width:160,ellipsis:true,hidden:true},
+                    {key:'creationDate',title:this.$t('common.creationDate'),width:160,ellipsis:true,hidden:false},
                     {key:'lastUpdateUserName',title:this.$t('common.lastUpdatedBy'),width:150,ellipsis:true,hidden:true},
-                    {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:160,ellipsis:true,hidden:true}
+                    {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:160,ellipsis:true,hidden:false}
                 );
                 if(this.columns.length>8){
                     this.table.columns.forEach(column=>{

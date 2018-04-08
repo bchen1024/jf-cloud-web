@@ -49,7 +49,8 @@
                             appCode:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
                             appName:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
                             appOwner:{required: true, message: 'The name cannot be empty', trigger: 'blur'}
-                        }
+                        },
+                        defaultValue:{removeCode:true}
                     },
                     toolbars:[
                         {refs:'addApp',title:vm.$t('common.add'),icon:'plus',add:true},
