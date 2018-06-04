@@ -1,40 +1,44 @@
 <template>
     <Layout :style="{height:'100%'}">
         <Menu v-show="showMenu" mode="horizontal" theme="primary" 
-            :active-name="$store.state.currentMainMenu"
-            style="height:48px;line-height:48px;">
+            :active-name="$store.state.menuStore.currentMainMenu"
+            class="layout-horizontal-menu">
             <!--Logo 应用名称-->
             <div class="layout-logo">
                 {{$t('common.appName')}}
-                <Icon v-if="$store.state.siderMenus.length>0" @click.native="openOrCloseSider" type="navicon" size="28" style="cursor: pointer;float:right;margin-top:2px;" :title="siderWidth==0?$t('common.open'):$t('common.close')"></Icon>
+                <Icon v-if="$store.state.menuStore.siderMenus.length>0" @click.native="openOrCloseSider" 
+                    type="navicon" size="28" style="cursor: pointer;float:right;margin-top:2px;" :title="siderWidth==0?$t('common.open'):$t('common.close')"></Icon>
             </div>
             <!--主菜单-->
             <div class="layout-nav">
-                <MenuItem v-for="mainMenu in $store.state.mainMenus" 
+                <MenuItem v-for="mainMenu in $store.state.menuStore.mainMenus" 
                     :name="mainMenu.name" :key="mainMenu.name">
                     <router-link :to="{name:mainMenu.name}" tag="li">{{$t(mainMenu.title)}}</router-link>
                 </MenuItem>
             </div>
             <!--导航操作菜单-->
             <div class="layout-menu">
-                <Dropdown>
+                <Dropdown class='layout-menu-dropdown'>
                     <a href="javascript:void(0)">
-                        jf-cloud
-                        <Icon type="arrow-down-b"></Icon>
+                        {{$store.state.currentApp && $store.state.currentApp.appName}}
+                        <template v-if="$store.state.currentApp && $store.state.currentApp.appName">
+                            <Icon type="arrow-down-b"></Icon>
+                        </template>
                     </a>
                     <DropdownMenu slot="list">
-                        <DropdownItem>jf-cloud</DropdownItem>
-                        <DropdownItem>jf-cloud-hr</DropdownItem>
+                        <DropdownItem v-for="app in $store.state.appList" :key="app.appId">
+                            {{app.appName}}
+                        </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <Dropdown>
+                <Dropdown @on-click="personClick" class='layout-menu-dropdown'>
                     <a href="javascript:void(0)">
                         <Avatar icon="person"/>
-                        陈斌
+                        {{$store.state.currentUser.userName}}
                     </a>
                     <DropdownMenu slot="list">
-                        <DropdownItem><router-link :to="{name:'person'}" tag="li">{{$t('common.person')}}</router-link></DropdownItem>
-                        <DropdownItem>{{$t('common.logout')}}</DropdownItem>
+                        <DropdownItem name='person'>{{$t('common.person')}}</DropdownItem>
+                        <DropdownItem name='logout'>{{$t('common.logout')}}</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>      
             </div>
@@ -45,7 +49,7 @@
             <BreadcrumbItem>
                 {{$t('common.home')}}
             </BreadcrumbItem>
-            <BreadcrumbItem  v-for="breadcrumb in $store.state.currentBreadcrumbs" :key="breadcrumb.name">
+            <BreadcrumbItem  v-for="breadcrumb in $store.state.menuStore.currentBreadcrumbs" :key="breadcrumb.name">
                 <template v-if="breadcrumb.path">
                     <router-link :to="{name:breadcrumb.name}">{{$t(breadcrumb.title)}}</router-link>
                 </template>
@@ -61,11 +65,11 @@
             </div>
         </Breadcrumb>
         <Layout class="layout-center">                        
-            <Sider :width="$store.state.siderMenus.length==0?0:siderWidth"  :style="{background: '#fff',overflow:'auto'}">
+            <Sider :width="$store.state.menuStore.siderMenus.length==0?0:siderWidth"  :style="{background: '#fff',overflow:'auto'}">
                 <Menu width="auto" :style="{height:'100%'}" accordion
-                    :active-name="$store.state.currentSiderMenu"
-                    :open-names="[$store.state.openMenuName]">
-                    <Submenu v-for="subMenu in $store.state.siderMenus" :name="subMenu.name" :key="subMenu.name">
+                    :active-name="$store.state.menuStore.currentSiderMenu"
+                    :open-names="[$store.state.menuStore.openMenuName]">
+                    <Submenu v-for="subMenu in $store.state.menuStore.siderMenus" :name="subMenu.name" :key="subMenu.name">
                         <template slot="title">
                             <Icon type="ios-navigate"></Icon>
                             {{$t(subMenu.title)}}
@@ -104,10 +108,34 @@
             //显示隐藏主菜单
             maxOrNoraml(){
                 this.showMenu=!this.showMenu;
+            },
+            personClick(name){
+                if(name=='person'){
+                    this.$router.push({name:name});
+                }else if(name=='logout'){
+                    this.$Modal.confirm({
+                        title: this.$t('common.logout'),
+                        content: this.$t('common.logoutConfirm'),
+                        onOk: () => {
+                            sessionStorage.removeItem("userStorage");
+                            sessionStorage.removeItem("token");
+                            this.$router.replace({name:'login'});
+                        }
+                    });
+                }
             }
         },
         created () {
-            this.$store.commit('loadMainMenus');
+            var vm=this;
+            var userStorage=sessionStorage.getItem('userStorage');
+            if(userStorage){
+                var userInfo=JSON.parse(userStorage);
+                vm.$store.state.currentUser=userInfo;
+                vm.$JFServices.userAppService.findUserApp({userId:userInfo.userId},vm);
+                this.$store.commit('loadMainMenus');
+            }else{
+                this.$router.replace({name:'login',query:{redirectPath:vm.$route.path,redirectName:vm.$route.name}});
+            }
         }
     };
 </script>
@@ -127,10 +155,14 @@
         border-radius: 3px;
         float: left;
         position: relative;
-        top: 8px;
+        top: 4px;
     }
     .layout-nav{
         margin: 0 auto;
+    }
+    .layout-horizontal-menu{
+        height:40px;
+        line-height: 40px;
     }
     .layout-menu{
         float: right;
@@ -140,14 +172,14 @@
         color:#ffffff;
     }
     .layout-menu .ivu-dropdown{
-        margin-right: 6px;
-        margin-left: 6px;
+        padding-right: 6px;
+        padding-left: 6px;
     }
     .layout-breadcrumb{
         padding-left:12px;
         padding-right:12px;
-        height:40px;
-        line-height:40px;
+        height:36px;
+        line-height:36px;
     }
     .layout-center{
         padding: 0 12px 12px;
@@ -156,5 +188,8 @@
         padding:12px;
         background: #ffffff;
         overflow:auto;
+    }
+    .layout-menu-dropdown:hover{
+        background-color:#2b85e4;
     }
 </style>

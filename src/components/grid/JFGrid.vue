@@ -80,7 +80,7 @@
         </Modal>
 
         <!--表格设置modal-->
-        <Modal v-if="table.setting" v-model="table.settingShow" width="800" :title="$t('common.setting')">
+        <Modal v-if="table.setting" v-model="table.settingShow" width="800" :title="$t('common.setting')" scrollable>
             <Table border stripe size="small"
                 :columns="settingTable.columns" :data="table.columns"  
                 >
@@ -135,7 +135,6 @@
     </div>
 </template>
 <script>
-    import {JFFetch} from '../../libs/jf.js';
     export default {
         name:'JFGrid',
         props:['gridOptions'],
@@ -240,7 +239,7 @@
                     }
                     this.table.loading=true;
                     this.table.data=[];
-                    JFFetch.doRequest(search.method,search.url,param,function(result){
+                    vue.$JFFetch.doRequest(search.method,search.url,param,function(result){
                         vue.table.loading=false;
                         vue.table.data=result.result ||[];
                         vue.pager=result.page;
@@ -358,7 +357,7 @@
             var options=this.gridOptions || {};
             //设置表格配置
             this.table=Object.assign({},{
-                columns:[],data:[],loading:false,setting:true,settingShow:false,defaultColumn:true,
+                columns:[],data:[],loading:false,setting:true,settingShow:false,defaultColumn:false,
                 showPager:true,noDataText:this.$t('common.noDataText')
             },options.table);
             if(this.table.defaultColumn){

@@ -1,15 +1,12 @@
-
 <template>
-    <div>
-        用户管理
-    </div>
+    <div>403</div>
 </template>
 <script>
     export default {
         data(){
-           return {
-               
-           };
+            return {
+                
+            }
         },
         methods: {
             

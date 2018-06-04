@@ -9,15 +9,6 @@
             return {
 
             };
-        },
-        mounted() {
-
-        },
-        beforeDestroy() {
-
-        },
-        methods: {
-
         }
     };
 </script>

@@ -57,9 +57,20 @@ export default{
         deleteSuccessful:'删除成功',
         deleteError:'删除错误',
         saveSuccessful:'保存成功',
-        saveError:'保存错误'
+        saveError:'保存错误',
+        tel:'手机号码',
+        email:'邮箱',
+        loginTitle:'登录',
+        accountNotNull:'账号不能为空',
+        passwordNotNull:'密码不能为空',
+        loginAccount:'账号、邮箱、手机号码',
+        loginPassword:'登录密码',
+        forgetPassword:'忘记密码',
+        login:'登录',
+        loginError:'登录发生异常'
     },
     menu:{
+        home:'首页',
         system:'系统管理',
         workspace:'工作空间',
         account:'账户管理',
@@ -84,6 +95,11 @@ export default{
         myApply:'我的申请',
         myApprove:'我的审批',
         myWorkflow:'我的流程',
+        applyMgt:'申请管理',
+        applyPermission:'权限申请',
+        importOrExport:'导入&导出',
+        workTodo:'工作代办',
+        person:'个人中心'
     },
     role:{
         code:'角色编码',
@@ -112,5 +128,12 @@ export default{
     group:{
         code:'群组编码',
         name:'群组名称'
+    },
+    user:{
+        account:'用户帐号',
+        name:'用户名称',
+        employeeNo:'员工号',
+        type:'用户类型',
+        timeout:'密码失效（天）'
     }
 };

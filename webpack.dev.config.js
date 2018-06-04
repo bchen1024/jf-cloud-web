@@ -20,15 +20,7 @@ module.exports = merge(webpackBaseConfig, {
     devServer: {
         //contentBase: path.resolve(__dirname, 'dev'),
         publicPath: '/dist/',
-        historyApiFallback: true,
-        proxy: {
-            // 请求到 '/device' 下 的请求都会被代理到 target： http://debug.xxx.com 中
-            '/jfcloud/*': { 
-                target: 'localhost:1000/jfcloud/',
-                secure: false, // 接受 运行在 https 上的服务
-                changeOrigin: true
-            }
-        }
+        historyApiFallback: true
     },
     plugins: [
         new ExtractTextPlugin({

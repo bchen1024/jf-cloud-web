@@ -1,11 +1,26 @@
 <template>
-    <JFGrid :gridOptions='grid' ref="gridI18n"/>
+    <Tabs value="default">
+        <TabPane label="默认国际化" name="default"><JFGrid :gridOptions='defaultI18nGrid' ref="gridDefaultI18n"/></TabPane>
+        <TabPane label="服务国际化" name="name2"><JFGrid :gridOptions='grid' ref="gridI18n"/></TabPane>
+    </Tabs>
+    
 </template>
 <script>
     export default {
         data(){
             var vm=this;
             return {
+                defaultI18nGrid:{
+                    table:{
+                        showPager:false,setting:false,
+                        columns:[
+                            {key:'i18nKey',title:vm.$t('i18n.key'),width:250,ellipsis:true},
+                            {key:'i18nCN',title:vm.$t('i18n.cn'),ellipsis:true},
+                            {key:'i18nEN',title:vm.$t('i18n.en'),ellipsis:true},
+                        ],
+                        data:vm.$JFI18n.parseI18n()
+                    }
+                },
                 grid:{
                     table:{
                         columns:[
