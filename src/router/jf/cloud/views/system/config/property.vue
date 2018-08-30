@@ -32,7 +32,7 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-config/config/property/page'
+                        url:'jfcloud/jf-cloud-platform/platform/config/property/page'
                     },
                     delete:{
                         url:'jfcloud/jf-cloud-config/config/property/batch/delete'

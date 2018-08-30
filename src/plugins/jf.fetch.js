@@ -10,7 +10,8 @@ export default{
                 'Content-type':'application/json',
                 'currentLanguage':localStorage.getItem('currentLanguage')||'zh_CN',
                 'Authorization':sessionStorage.token || '',
-            }
+            },
+            credentials: 'include'
         };
         let baseUrl=Config.serviceUrl;
         let realUrl=baseUrl+url;
@@ -44,17 +45,17 @@ export default{
             }
             return resp.json();
         }).then(function(result){
-            if(result.status>200){
+            if(result.httpCode>200){
                 if(failCallback){
                     failCallback.call(this,result);
                 }else{
                     Vue.$Modal.error({
                         title: 'Error',
-                        content: result.message
+                        content: result.errorMsg
                     });
                 }
             }else{
-                successCallback && successCallback.call(this,result);
+                successCallback && successCallback.call(this,result.data);
             }
         }).catch(function(error){
             failCallback && failCallback.call(this,error);

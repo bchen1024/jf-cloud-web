@@ -8,7 +8,6 @@
             return {
                 grid:{
                     table:{
-                        defaultColumn:true,
                         columns:[
                             {type:'selection',width:60,align:'center'},
                             {key:'operate',title:vm.$t('common.operate'),width:120,align:'center',render: (h, params) => {
@@ -31,7 +30,7 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-security/security/role/page'
+                        url:'jfcloud/jf-cloud-platform/platform/security/role/page'
                     },
                     delete:{
                         url:'jfcloud/jf-cloud-security/security/role/batch/delete'
