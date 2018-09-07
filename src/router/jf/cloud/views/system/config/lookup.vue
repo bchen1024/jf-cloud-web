@@ -22,23 +22,23 @@
                                     },this.$t('common.edit'))
                                 ]);
                             }},
-                            {key:'codeNo',title:vm.$t('code.no'),width:150,ellipsis:true,condition:true},
-                            {key:'codeName',title:vm.$t('code.name'),width:150,ellipsis:true,condition:true},
-                            {key:'codeType',title:vm.$t('code.type'),width:120,ellipsis:true},
-                            {key:'codeParent',title:vm.$t('code.parent'),width:150,ellipsis:true},
-                            {key:'codeDesc',title:vm.$t('common.desc'),ellipsis:true},
+                            {key:'codeNo',title:vm.$t('code.no'),width:150,tooltip:true,condition:true},
+                            {key:'codeName',title:vm.$t('code.name'),width:150,tooltip:true,condition:true},
+                            {key:'codeType',title:vm.$t('code.type'),width:120,tooltip:true},
+                            {key:'codeParent',title:vm.$t('code.parent'),width:150,tooltip:true},
+                            {key:'codeDesc',title:vm.$t('common.desc'),tooltip:true},
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-config/config/lookup/page'
+                        url:'jfcloud/jf-cloud-platform/platform/config/lookup/page'
                     },
                     delete:{
-                        url:'jfcloud/jf-cloud-config/config/lookup/batch/delete'
+                        url:'jfcloud/jf-cloud-platform/platform/config/lookup/batch/delete'
                     },
                     form:{
                         ref:'formLookup',
-                        createUrl:'jfcloud/jf-cloud-config/config/lookup/create',
-                        updateUrl:'jfcloud/jf-cloud-config/config/lookup/update',
+                        createUrl:'jfcloud/jf-cloud-platform/platform/config/lookup/create',
+                        updateUrl:'jfcloud/jf-cloud-platform/platform/config/lookup/update',
                         items:[
                             {key:'codeNo',title:vm.$t('code.no')},
                             {key:'codeName',title:vm.$t('code.name')},

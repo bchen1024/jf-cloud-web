@@ -43,15 +43,15 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-config/config/i18n/page'
+                        url:'jfcloud/jf-cloud-platform/platform/config/i18n/page'
                     },
                     delete:{
-                        url:'jfcloud/jf-cloud-config/config/i18n/batch/delete'
+                        url:'jfcloud/jf-cloud-platform/platform/config/i18n/batch/delete'
                     },
                     form:{
                         ref:'formI18n',
-                        createUrl:'jfcloud/jf-cloud-config/config/i18n/create',
-                        updateUrl:'jfcloud/jf-cloud-config/config/i18n/update',
+                        createUrl:'jfcloud/jf-cloud-platform/platform/config/i18n/create',
+                        updateUrl:'jfcloud/jf-cloud-platform/platform/config/i18n/update',
                         items:[
                             {key:'i18nKey',title:vm.$t('i18n.key')},
                             {key:'i18nCN',title:vm.$t('i18n.cn'),type:'textarea'},

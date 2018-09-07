@@ -155,7 +155,8 @@
                     autoLoad:true,
                     queryParams:{},
                     queryKey:"",
-                    queryValue:""
+                    queryValue:"",
+                    method:"post"
                 },
                 form:{},
                 settingTable:{
@@ -242,7 +243,7 @@
                     vue.$JFFetch.doRequest(search.method,search.url,param,function(result){
                         vue.table.loading=false;
                         vue.table.data=result.result ||[];
-                        vue.pager=result.page;
+                        vue.pager=result.pageVO;
                     },function(error){
                         vue.table.loading=false;
                     });
@@ -299,7 +300,7 @@
                     deleteOp.fn.call(this,this.selectItems);
                 }else if(deleteOp.url){//执行默认的删除方法
                     this.deleteOp.loading=true;
-                    JFFetch.doRequest(deleteOp.method ||"DELETE",deleteOp.url,this.selectItems,function(result){
+                    vm.$JFFetch.doRequest(deleteOp.method ||"DELETE",deleteOp.url,this.selectItems,function(result){
                         vm.deleteOp.loading=false;
                         vm.deleteOp.isShow=false;
                         vm.$Message.success(vm.$t('common.deleteSuccessful'));
@@ -331,7 +332,7 @@
                             method="PUT";
                         }
                         vm.form.saveLoading=true;
-                        JFFetch.doRequest(method,url,formData,function(result){
+                        vm.$JFFetch.doRequest(method,url,formData,function(result){
                             vm.form.data={};
                             vm.form.saveLoading=false;
                             vm.form.show=false;

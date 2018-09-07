@@ -30,15 +30,15 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-security/security/group/page'
+                        url:'jfcloud/jf-cloud-platform/platform/security/group/page'
                     },
                     delete:{
-                        url:'jfcloud/jf-cloud-security/security/group/batch/delete'
+                        url:'jfcloud/jf-cloud-platform/platform/security/group/batch/delete'
                     },
                     form:{
                         ref:'groupForm',
-                        createUrl:'jfcloud/jf-cloud-security/security/group/create',
-                        updateUrl:'jfcloud/jf-cloud-security/security/group/update',
+                        createUrl:'jfcloud/jf-cloud-platform/platform/security/group/create',
+                        updateUrl:'jfcloud/jf-cloud-platform/platform/security/group/update',
                         items:[
                             {key:'groupCode',title:vm.$t('group.code')},
                             {key:'groupName',title:vm.$t('group.name')},

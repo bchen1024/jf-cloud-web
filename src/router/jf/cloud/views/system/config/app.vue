@@ -29,16 +29,16 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-config/config/app/page',
+                        url:'jfcloud/jf-cloud-platform/platform/security/app/page',
                         queryParams:{removeCode:true}
                     },
                     delete:{
-                        url:'jfcloud/jf-cloud-config/config/app/batch/delete'
+                        url:'jfcloud/jf-cloud-platform/platform/security/app/batch/delete'
                     },
                     form:{
                         ref:'formApp',
-                        createUrl:'jfcloud/jf-cloud-config/config/app/create',
-                        updateUrl:'jfcloud/jf-cloud-config/config/app/update',
+                        createUrl:'jfcloud/jf-cloud-platform/platform/security/app/create',
+                        updateUrl:'jfcloud/jf-cloud-platform/platform/security/app/update',
                         items:[
                             {key:'appCode',title:vm.$t('app.code')},
                             {key:'appName',title:vm.$t('app.name')},

@@ -1,4 +1,4 @@
-const configUrl='jfcloud/jf-cloud-config/config/';
+const configUrl='jfcloud/jf-cloud-platform/platform/config/';
 var config={
     userApp:{
         list:configUrl+'userApp/list'

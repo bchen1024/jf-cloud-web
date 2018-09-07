@@ -34,7 +34,7 @@
                 <Dropdown @on-click="personClick" class='layout-menu-dropdown'>
                     <a href="javascript:void(0)">
                         <Avatar icon="person"/>
-                        {{$store.state.currentUser.userName}}
+                        {{$store.state.currentUser && $store.state.currentUser.userName}}
                     </a>
                     <DropdownMenu slot="list">
                         <DropdownItem name='person'>{{$t('common.person')}}</DropdownItem>
@@ -147,8 +147,8 @@
     }
     .layout-logo{
         width: 199px;
-        height: 32px;
-        line-height: 32px;
+        height: 40px;
+        line-height: 40px;
         color:#fff;
         font-size: 24px;
         text-align: center;
@@ -161,8 +161,8 @@
         margin: 0 auto;
     }
     .layout-horizontal-menu{
-        height:40px;
-        line-height: 40px;
+        height:48px;
+        line-height: 48px;
     }
     .layout-menu{
         float: right;

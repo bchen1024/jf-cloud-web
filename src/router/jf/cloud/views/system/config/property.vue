@@ -32,15 +32,15 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-config/config/property/page'
+                        url:'jfcloud/jf-cloud-platform/platform/config/property/page'
                     },
                     delete:{
-                        url:'jfcloud/jf-cloud-config/config/property/batch/delete'
+                        url:'jfcloud/jf-cloud-platform/platform/config/property/batch/delete'
                     },
                     form:{
                         ref:'formProperty',
-                        createUrl:'jfcloud/jf-cloud-config/config/property/create',
-                        updateUrl:'jfcloud/jf-cloud-config/config/property/update',
+                        createUrl:'jfcloud/jf-cloud-platform/platform/config/property/create',
+                        updateUrl:'jfcloud/jf-cloud-platform/platform/config/property/update',
                         items:[
                             {key:'propertyKey',title:vm.$t('property.key')},
                             {key:'propertyValue',title:vm.$t('property.value')},

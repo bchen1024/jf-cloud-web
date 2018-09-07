@@ -58,18 +58,16 @@
                             password:this.formInline.password
                         };
                         this.loginLoading=true;
-                        vue.$JFFetch.doPost("jfcloud/jf-cloud-security/security/public/auth/login",params,function(result){
+                        vue.$JFFetch.doPost("jfcloud/jf-cloud-sso/sso/auth/login",params,function(result){
                              vue.loginLoading=false;
-                            if(result.errorCode==0){
-                                sessionStorage.setItem("token",JSON.stringify(result.token));
-                                sessionStorage.setItem("userStorage",JSON.stringify(result.userInfo));
+                            if(result){
+                                sessionStorage.setItem("token",result.token);
+                                sessionStorage.setItem("userStorage",JSON.stringify(result.user));
                                 if(vue.$route.query.redirectName){
                                     vue.$router.replace({name:vue.$route.query.redirectName});
                                 }else{
                                     vue.$router.replace({name:'home'});
                                 }
-                            }else{
-                                vue.loginMsg=vue.$t(result.errorMsg);
                             }
                         },function(){
                             vue.loginLoading=false;

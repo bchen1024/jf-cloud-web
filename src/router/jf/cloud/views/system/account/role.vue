@@ -31,15 +31,15 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-security/security/role/page'
+                        url:'jfcloud/jf-cloud-platform/platform/security/role/page'
                     },
                     delete:{
-                        url:'jfcloud/jf-cloud-security/security/role/batch/delete'
+                        url:'jfcloud/jf-cloud-platform/platform/security/role/batch/delete'
                     },
                     form:{
                         ref:'roleForm',
-                        createUrl:'jfcloud/jf-cloud-security/security/role/create',
-                        updateUrl:'jfcloud/jf-cloud-security/security/role/update',
+                        createUrl:'jfcloud/jf-cloud-platform/platform/security/role/create',
+                        updateUrl:'jfcloud/jf-cloud-platform/platform/security/role/update',
                         items:[
                             {key:'roleCode',title:vm.$t('role.code')},
                             {key:'roleName',title:vm.$t('role.name')},

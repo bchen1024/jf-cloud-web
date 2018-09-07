@@ -54,7 +54,7 @@ export default{
                     });
                 }
             }else{
-                successCallback && successCallback.call(this,result);
+                successCallback && successCallback.call(this,result.data);
             }
         }).catch(function(error){
             failCallback && failCallback.call(this,error);
