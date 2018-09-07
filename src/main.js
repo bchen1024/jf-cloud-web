@@ -23,13 +23,13 @@ JFPlugins.plugins.$JFI18n.init(Vue);
 
 // 路由配置
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     routes: routerObj.routers
 });
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
-    if(to.matched.length==0){
+    if(to.matched.length==0 && to.path!='/'){
         next({
             name:'404'
         });
@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
             name:'home'
         });
     }else{
-        window.document.title = router.app.$t(to.meta.title);
+        window.document.title = router.app.$t('menu.'+to.name);
         next();
     }
 });

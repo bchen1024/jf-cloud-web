@@ -2,7 +2,8 @@
     <Layout :style="{height:'100%'}">
         <Menu v-show="showMenu" mode="horizontal" theme="primary" 
             :active-name="$store.state.menuStore.currentMainMenu"
-            class="layout-horizontal-menu">
+            class="layout-horizontal-menu"
+            @on-select="menuSelect">
             <!--Logo 应用名称-->
             <div class="layout-logo">
                 {{$t('common.appName')}}
@@ -13,20 +14,20 @@
             <div class="layout-nav">
                 <MenuItem v-for="mainMenu in $store.state.menuStore.mainMenus" 
                     :name="mainMenu.name" :key="mainMenu.name">
-                    <router-link :to="{name:mainMenu.name}" tag="li">{{$t(mainMenu.title)}}</router-link>
+                    {{$t(mainMenu.title)}}
                 </MenuItem>
             </div>
             <!--导航操作菜单-->
             <div class="layout-menu">
                 <Dropdown class='layout-menu-dropdown'>
                     <a href="javascript:void(0)">
-                        {{$store.state.currentApp && $store.state.currentApp.appName}}
-                        <template v-if="$store.state.currentApp && $store.state.currentApp.appName">
+                        {{$store.state.currentStore.currentApp && $store.state.currentStore.currentApp.appName}}
+                        <template v-if="$store.state.currentStore.currentApp && $store.state.currentStore.currentApp.appName">
                             <Icon type="arrow-down-b"></Icon>
                         </template>
                     </a>
                     <DropdownMenu slot="list">
-                        <DropdownItem v-for="app in $store.state.appList" :key="app.appId">
+                        <DropdownItem v-for="app in $store.state.currentStore.appList" :key="app.appId">
                             {{app.appName}}
                         </DropdownItem>
                     </DropdownMenu>
@@ -34,8 +35,7 @@
                 <Dropdown @on-click="personClick" class='layout-menu-dropdown'>
                     <a href="javascript:void(0)">
                         <Avatar icon="person"/>
-                        {{$store.state.currentUser && $store.state.currentUser.userName}}
-                    </a>
+                        {{$store.state.currentUser && $store.state.currentUser.userName}}                    </a>
                     <DropdownMenu slot="list">
                         <DropdownItem name='person'>{{$t('common.person')}}</DropdownItem>
                         <DropdownItem name='logout'>{{$t('common.logout')}}</DropdownItem>
@@ -68,7 +68,8 @@
             <Sider :width="$store.state.menuStore.siderMenus.length==0?0:siderWidth"  :style="{background: '#fff',overflow:'auto'}">
                 <Menu width="auto" :style="{height:'100%'}" accordion
                     :active-name="$store.state.menuStore.currentSiderMenu"
-                    :open-names="[$store.state.menuStore.openMenuName]">
+                    :open-names="[$store.state.menuStore.openMenuName]"
+                    @on-select="menuSelect">
                     <Submenu v-for="subMenu in $store.state.menuStore.siderMenus" :name="subMenu.name" :key="subMenu.name">
                         <template slot="title">
                             <Icon type="ios-navigate"></Icon>
@@ -76,7 +77,7 @@
                         </template>
                         <template v-if="subMenu.children && subMenu.children.length>0">
                             <MenuItem v-for="menu in subMenu.children" :name="menu.name" :key="menu.name">
-                                <router-link :to="{name:menu.name}" tag="li">{{$t(menu.title)}}</router-link>
+                                {{$t(menu.title)}}
                             </MenuItem>
                         </template>
                     </Submenu>
@@ -97,6 +98,9 @@
             }
         },
         methods: {
+            menuSelect(name){
+                this.$router.push({name:name});
+            },
             //打开关闭左侧菜单
             openOrCloseSider(){
                 if(this.siderWidth==0){
@@ -130,7 +134,7 @@
             var userStorage=sessionStorage.getItem('userStorage');
             if(userStorage){
                 var userInfo=JSON.parse(userStorage);
-                vm.$store.state.currentUser=userInfo;
+                vm.$store.state.currentStore.currentUser=userInfo;
                 vm.$JFServices.userAppService.findUserApp({userId:userInfo.userId},vm);
                 this.$store.commit('loadMainMenus');
             }else{

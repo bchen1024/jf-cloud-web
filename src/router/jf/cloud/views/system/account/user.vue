@@ -33,8 +33,7 @@
                         ]
                     },
                     search:{
-                        url:'jfcloud/jf-cloud-platform/platform/security/user/page'
-                    }
+                        url:'jfcloud/jf-cloud-platform/platform/security/user/page'                    }
                 }
             }
         }

@@ -3,30 +3,31 @@
         <!--工具栏，存在工具栏按钮或者支持搜索渲染-->
         <Row v-if="(toolbars && toolbars.length>0) || table.queryFields.length>0 || table.setting" 
              class="jf-toolbar" type="flex" justify="start">
-            <!--普通按钮-->
-            <Button v-if="!bar.items || bar.items.length==0"  
-                    v-for="bar in toolbars" 
-                    :key="bar.refs" 
-                    :type="bar.type || 'primary'" 
-                    :icon="bar.icon" 
-                    :disabled="bar.disabled || (bar.selection && (!selectItems || selectItems.length==0))"
-                    class="jf-toolbar-item"
-                    @click="btnClick(bar)">
-                {{bar.title}}
-            </Button>
-            <!--菜单按钮-->
-            <Dropdown v-if="bar.items && bar.items.length>0" v-for="bar in toolbars" :key="bar.refs">
-                <Button :type="bar.type || 'info'"  class="jf-toolbar-item">
+            <template v-for="bar in toolbars" >
+                 <!--普通按钮-->
+                <Button v-if="!bar.items || bar.items.length==0"  
+                        :key="bar.refs" 
+                        :type="bar.type || 'primary'" 
+                        :icon="bar.icon" 
+                        :disabled="bar.disabled || (bar.selection && (!selectItems || selectItems.length==0))"
+                        class="jf-toolbar-item"
+                        @click="btnClick(bar)">
                     {{bar.title}}
-                    <Icon type="arrow-down-b"></Icon>
                 </Button>
-                <Dropdown-menu slot="list">
-                    <Dropdown-item v-for="item in bar.items" :key="item.refs"
-                        :disabled="item.disabled || (item.selection && (!selectItems || selectItems.length==0))">
-                        {{item.title}}
-                    </Dropdown-item>
-                </Dropdown-menu>
-            </Dropdown>
+                <!--菜单按钮-->
+                <Dropdown v-if="bar.items && bar.items.length>0" :key="bar.refs">
+                    <Button :type="bar.type || 'info'"  class="jf-toolbar-item">
+                        {{bar.title}}
+                        <Icon type="arrow-down-b"></Icon>
+                    </Button>
+                    <Dropdown-menu slot="list">
+                        <Dropdown-item v-for="item in bar.items" :key="item.refs"
+                            :disabled="item.disabled || (item.selection && (!selectItems || selectItems.length==0))">
+                            {{item.title}}
+                        </Dropdown-item>
+                    </Dropdown-menu>
+                </Dropdown>
+            </template>
             <!--搜索框-->
             <Input v-if="table.queryFields.length>0"
                     icon="ios-search"
@@ -50,7 +51,7 @@
         </Row>
         <!--Table列表-->
         <Table border stripe size="small"
-            :columns="columns" :data="table.data"  
+            :columns="columns" :data="data"  
             :loading="table.loading"
             :no-data-text="table.noDataText"
             @on-selection-change="selectionChange">
@@ -80,10 +81,12 @@
         </Modal>
 
         <!--表格设置modal-->
-        <Modal v-if="table.setting" v-model="table.settingShow" width="800" :title="$t('common.setting')" scrollable>
+        <Modal v-if="table.setting" v-model="table.settingShow" width="800" 
+            :title="$t('common.setting')" scrollable
+            :styles="{top: '48px'}">
             <Table border stripe size="small"
                 :columns="settingTable.columns" :data="table.columns"  
-                >
+                height=400>
             </Table>
             <div slot="footer">
                 <Button type="primary" >{{$t('common.ok')}}</Button>
@@ -168,7 +171,7 @@
                             }
                             return params.row.title;
                         }},
-                        {key:'hidden',title:vm.$t('common.show'),align:'center',render:(h,params)=>{
+                        {key:'hidden',title:vm.$t('common.show'),width:100,align:'center',render:(h,params)=>{
                             var type='checkmark',color='green';
                             if(params.row.hidden){
                                 type='close';
@@ -182,7 +185,7 @@
                                 }
                             });
                         }},
-                        {key:'fixed',title:vm.$t('common.fixed'),align:'center',render:(h,params)=>{
+                        {key:'fixed',title:vm.$t('common.fixed'),align:'center',width:100,render:(h,params)=>{
                             if(params.row.fixed){
                                 return params.row.fixed;
                             }
@@ -194,7 +197,7 @@
                                 }
                             });
                         }},
-                        {key:'width',title:vm.$t('common.width'),render:(h,params)=>{
+                        {key:'width',title:vm.$t('common.width'),width:100,render:(h,params)=>{
                             if(params.row.width){
                                 return params.row.width;
                             }
@@ -206,15 +209,26 @@
         },
         computed:{
             columns(){
-                var columns=[];
-                if(this.table.columns.length>0){
-                    this.table.columns.forEach(column=>{
-                        if(!column.hidden){
-                            columns.push(column);
-                        }
-                    });
+                var columns=this.table.columns || [];
+                if(this.table.defaultColumn){
+                    columns.push(
+                        {key:'createUserName',title:this.$t('common.createdBy'),width:150,ellipsis:true,hidden:true},
+                        {key:'creationDate',title:this.$t('common.creationDate'),width:160,ellipsis:true,hidden:false},
+                        {key:'lastUpdateUserName',title:this.$t('common.lastUpdatedBy'),width:150,ellipsis:true,hidden:true},
+                        {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:160,ellipsis:true,hidden:false}
+                    );
+                    if(columns.length>8){
+                        columns.forEach(column=>{
+                            if(!column.width){
+                                column.width=250;
+                            }
+                        });
+                    }
                 }
                 return columns;
+            },
+            data(){
+               return this.table.data ||[];
             }
         },
         methods:{
@@ -240,6 +254,7 @@
                     }
                     this.table.loading=true;
                     this.table.data=[];
+                    search.method = search.method || 'POST';
                     vue.$JFFetch.doRequest(search.method,search.url,param,function(result){
                         vue.table.loading=false;
                         vue.table.data=result.result ||[];
@@ -358,24 +373,9 @@
             var options=this.gridOptions || {};
             //设置表格配置
             this.table=Object.assign({},{
-                columns:[],data:[],loading:false,setting:true,settingShow:false,defaultColumn:false,
+                columns:[],data:[],loading:false,setting:true,settingShow:false,defaultColumn:true,
                 showPager:true,noDataText:this.$t('common.noDataText')
             },options.table);
-            if(this.table.defaultColumn){
-                this.table.columns.push(
-                    {key:'createUserName',title:this.$t('common.createdBy'),width:150,ellipsis:true,hidden:true},
-                    {key:'creationDate',title:this.$t('common.creationDate'),width:160,ellipsis:true,hidden:false},
-                    {key:'lastUpdateUserName',title:this.$t('common.lastUpdatedBy'),width:150,ellipsis:true,hidden:true},
-                    {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:160,ellipsis:true,hidden:false}
-                );
-                if(this.columns.length>8){
-                    this.table.columns.forEach(column=>{
-                        if(!column.width){
-                            column.width=250;
-                        }
-                    });
-                }
-            }
 
             //设置分页配置
             this.pager=Object.assign({},{

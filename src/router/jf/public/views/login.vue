@@ -68,10 +68,12 @@
                                 }else{
                                     vue.$router.replace({name:'home'});
                                 }
+                            }else{
+                                vue.loginMsg=vue.$t(result.errorMsg);
                             }
-                        },function(){
+                        },function(result){
                             vue.loginLoading=false;
-                            vue.loginMsg=vue.$t('common.loginError');
+                            vue.loginMsg=result.errorMsg;
                         });
                     }
                 })
