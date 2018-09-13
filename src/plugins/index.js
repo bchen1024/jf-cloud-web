@@ -1,9 +1,11 @@
 
 import $JFI18n from './jf.i18n.js';
 import $JFFetch from './jf.fetch.js';
+import $JFUtil from './jf.util.js';
 const plugins={
     $JFI18n,
-    $JFFetch
+    $JFFetch,
+    $JFUtil
 };
 
 const install=function(Vue){

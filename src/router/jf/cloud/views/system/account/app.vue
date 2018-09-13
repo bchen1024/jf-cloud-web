@@ -22,10 +22,12 @@
                                     },this.$t('common.edit'))
                                 ]);
                             }},
-                            {key:'appCode',title:vm.$t('app.code'),width:150,ellipsis:true,condition:true},
-                            {key:'appName',title:vm.$t('app.name'),width:150,ellipsis:true,condition:true},
-                            {key:'appOwner',title:vm.$t('common.owner'),width:120,ellipsis:true},
-                            {key:'appDesc',title:vm.$t('common.desc'),ellipsis:true}
+                            {key:'appCode',title:vm.$t('app.code'),width:150,condition:true},
+                            {key:'appName',title:vm.$t('app.name'),width:150,condition:true},
+                            {key:'appOwner',title:vm.$t('common.owner'),width:150,render:(h,params)=>{
+                                return vm.$JFUtil.formatUser(h,params.row.appOwner,vm.$refs.gridApp.userMap);
+                            }},
+                            {key:'appDesc',title:vm.$t('common.desc')}
                         ]
                     },
                     search:{
@@ -53,7 +55,7 @@
                         defaultValue:{removeCode:true}
                     },
                     toolbars:[
-                        {refs:'addApp',title:vm.$t('common.add'),icon:'plus',add:true},
+                        {refs:'addApp',title:vm.$t('common.add'),icon:'ios-add',add:true},
                         {refs:'deleteApp',title:vm.$t('common.delete'),
                             icon:'ios-trash-outline',type:'error',
                             selection:true,delete:true

@@ -8,7 +8,7 @@
             <div class="layout-logo">
                 {{$t('common.appName')}}
                 <Icon v-if="$store.state.menuStore.siderMenus.length>0" @click.native="openOrCloseSider" 
-                    type="navicon" size="28" style="cursor: pointer;float:right;margin-top:2px;" :title="siderWidth==0?$t('common.open'):$t('common.close')"></Icon>
+                    type="ios-menu" size="28" style="cursor: pointer;float:right;margin-top:6px;" :title="siderWidth==0?$t('common.open'):$t('common.close')"></Icon>
             </div>
             <!--主菜单-->
             <div class="layout-nav">
@@ -32,38 +32,48 @@
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <Dropdown @on-click="personClick" class='layout-menu-dropdown'>
-                    <a href="javascript:void(0)">
-                        <Avatar icon="person"/>
-                        {{$store.state.currentUser && $store.state.currentUser.userName}}                    </a>
-                    <DropdownMenu slot="list">
-                        <DropdownItem name='person'>{{$t('common.person')}}</DropdownItem>
-                        <DropdownItem name='logout'>{{$t('common.logout')}}</DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>      
+                <template v-if="$store.state.currentStore">
+                    <Dropdown @on-click="personClick" class='layout-menu-dropdown'>
+                        <a href="javascript:void(0)">
+                            <Avatar icon="ios-person"/>
+                            {{$store.state.currentStore.currentUser.userName+'('+$store.state.currentStore.currentUser.userAccount+')'}} 
+                        </a>
+                        <DropdownMenu slot="list">
+                            <DropdownItem name='person'>{{$t('common.person')}}</DropdownItem>
+                            <DropdownItem name='logout'>{{$t('common.logout')}}</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown> 
+                </template>
             </div>
         </Menu>
-        <!--导航面包屑-->
-        <Breadcrumb class="layout-breadcrumb">
-            <template>{{$t('common.curPath')}}</template>
-            <BreadcrumbItem>
-                {{$t('common.home')}}
-            </BreadcrumbItem>
-            <BreadcrumbItem  v-for="breadcrumb in $store.state.menuStore.currentBreadcrumbs" :key="breadcrumb.name">
-                <template v-if="breadcrumb.path">
-                    <router-link :to="{name:breadcrumb.name}">{{$t(breadcrumb.title)}}</router-link>
-                </template>
-                <template v-else>
-                    {{$t(breadcrumb.title)}}
-                </template>
-            </BreadcrumbItem>
-            <div style="float:right;margin-top: 5px;">
-                <Icon @click.native="maxOrNoraml" 
-                    :type="showMenu?'arrow-expand':'arrow-shrink'" size="28"
-                    :title="showMenu?$t('common.max'):$t('common.noraml')"
-                     style="cursor: pointer;"></Icon>
-            </div>
-        </Breadcrumb>
+         <Row>
+            <Col span="20">
+                <!--导航面包屑-->
+                <Breadcrumb class="layout-breadcrumb">
+                    <template>{{$t('common.curPath')}}</template>
+                    <BreadcrumbItem>
+                        {{$t('common.home')}}
+                    </BreadcrumbItem>
+                    <BreadcrumbItem  v-for="breadcrumb in $store.state.menuStore.currentBreadcrumbs" :key="breadcrumb.name">
+                        <template v-if="breadcrumb.path">
+                            <router-link :to="{name:breadcrumb.name}">{{$t(breadcrumb.title)}}</router-link>
+                        </template>
+                        <template v-else>
+                            {{$t(breadcrumb.title)}}
+                        </template>
+                    </BreadcrumbItem>
+                </Breadcrumb>
+            </Col>
+            <Col span="4">
+                <div style="float:right;margin-top: 5px;margin-right:10px;">
+                    <Icon @click.native="maxOrNoraml" 
+                        type="ios-expand" size="24"
+                        :title="showMenu?$t('common.max'):$t('common.noraml')"
+                        style="cursor: pointer;"></Icon>
+                </div>
+            </Col>
+        </Row>
+        
         <Layout class="layout-center">                        
             <Sider :width="$store.state.menuStore.siderMenus.length==0?0:siderWidth"  :style="{background: '#fff',overflow:'auto'}">
                 <Menu width="auto" :style="{height:'100%'}" accordion
@@ -135,10 +145,10 @@
             if(userStorage){
                 var userInfo=JSON.parse(userStorage);
                 vm.$store.state.currentStore.currentUser=userInfo;
-                vm.$JFServices.userAppService.findUserApp({userId:userInfo.userId},vm);
+                //vm.$JFServices.userAppService.findUserApp({userId:userInfo.userId},vm);
                 this.$store.commit('loadMainMenus');
             }else{
-                this.$router.replace({name:'login',query:{redirectPath:vm.$route.path,redirectName:vm.$route.name}});
+                this.$router.replace({name:'login',query:{redirectName:vm.$route.name}});
             }
         }
     };

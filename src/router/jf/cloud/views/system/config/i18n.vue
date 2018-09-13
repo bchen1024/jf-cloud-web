@@ -12,11 +12,11 @@
             return {
                 defaultI18nGrid:{
                     table:{
-                        showPager:false,setting:false,
+                        showPager:false,setting:false,defaultColumn:false,
                         columns:[
-                            {key:'i18nKey',title:vm.$t('i18n.key'),width:250,ellipsis:true},
-                            {key:'i18nCN',title:vm.$t('i18n.cn'),ellipsis:true},
-                            {key:'i18nEN',title:vm.$t('i18n.en'),ellipsis:true},
+                            {key:'i18nKey',title:vm.$t('i18n.key'),width:250},
+                            {key:'i18nCN',title:vm.$t('i18n.cn')},
+                            {key:'i18nEN',title:vm.$t('i18n.en')},
                         ],
                         data:vm.$JFI18n.parseI18n()
                     }
@@ -37,9 +37,9 @@
                                     },this.$t('common.edit'))
                                 ]);
                             }},
-                            {key:'i18nKey',title:vm.$t('i18n.key'),width:250,ellipsis:true,condition:true},
-                            {key:'i18nCN',title:vm.$t('i18n.cn'),ellipsis:true,condition:true},
-                            {key:'i18nEN',title:vm.$t('i18n.en'),ellipsis:true,condition:true},
+                            {key:'i18nKey',title:vm.$t('i18n.key'),width:250,condition:true},
+                            {key:'i18nCN',title:vm.$t('i18n.cn'),condition:true},
+                            {key:'i18nEN',title:vm.$t('i18n.en'),condition:true},
                         ]
                     },
                     search:{
@@ -64,7 +64,7 @@
                         }
                     },
                     toolbars:[
-                        {refs:'addI18n',title:vm.$t('common.add'),icon:'plus',add:true},
+                        {refs:'addI18n',title:vm.$t('common.add'),icon:'ios-add',add:true},
                         {refs:'deleteI18n',title:vm.$t('common.delete'),
                             icon:'ios-trash-outline',type:'error',
                             selection:true,delete:true

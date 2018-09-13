@@ -22,11 +22,13 @@
                                     },this.$t('common.edit'))
                                 ]);
                             }},
-                            {key:'roleCode',title:vm.$t('role.code'),width:120,ellipsis:true,condition:true},
-                            {key:'roleName',title:vm.$t('role.name'),width:150,ellipsis:true,condition:true},
+                            {key:'roleCode',title:vm.$t('role.code'),width:120,condition:true},
+                            {key:'roleName',title:vm.$t('role.name'),width:150,condition:true},
                             {key:'applyStatus',title:vm.$t('common.applyStatus'),width:100},
-                            {key:'roleOwner',title:vm.$t('common.owner'),width:120,ellipsis:true},
-                            {key:'roleDesc',title:vm.$t('common.desc'),ellipsis:true}
+                            {key:'roleOwner',title:vm.$t('common.owner'),width:120,render:(h,params)=>{
+                                return vm.$JFUtil.formatUser(h,params.row.roleOwner,vm.$refs.gridRole.userMap);
+                            }},
+                            {key:'roleDesc',title:vm.$t('common.desc')}
                         ]
                     },
                     search:{
@@ -58,7 +60,7 @@
                         defaultValue:{applyStatus:'N'}
                     },
                     toolbars:[
-                        {refs:'addRole',title:vm.$t('common.add'),icon:'plus',add:true},
+                        {refs:'addRole',title:vm.$t('common.add'),icon:'ios-add',add:true},
                         {refs:'deleteRole',title:vm.$t('common.delete'),icon:'ios-trash-outline',type:'error',selection:true,delete:true},
                         {title:vm.$t('common.importOrExport'),items:[
                             {title:vm.$t('common.exportSelectedItems'),selection:true},

@@ -19,7 +19,8 @@ export default{
         publish:'发布',
         operate:'操作',
         lastUpdatedBy:'最后更新人',
-        lastUpdationDate:'最后更新时间'
+        lastUpdationDate:'最后更新时间',
+        logoutConfirm:'Are you sure you want to quit the system?'
     },
     menu:{
         system:'System',

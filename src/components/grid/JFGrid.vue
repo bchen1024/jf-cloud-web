@@ -45,7 +45,7 @@
                     </Select>
             </Input>
             <span v-if="table.setting" style="margin-start:auto">
-                <Icon type="ios-gear-outline" size="20" 
+                <Icon type="ios-settings-outline" size="20" 
                  style="margin-top:12px;margin-right:3px;cursor: pointer;" :title="$t('common.setting')" @click.native="openSetting"></Icon>
             </span>
         </Row>
@@ -62,7 +62,6 @@
             :total="pager.total" 
             :page-size="pager.pageSize" 
             :current="pager.curPage" 
-            size="small"
             placement="top" show-elevator show-sizer show-total
             class="table-pager">
         </Page>
@@ -85,7 +84,7 @@
             :title="$t('common.setting')" scrollable
             :styles="{top: '48px'}">
             <Table border stripe size="small"
-                :columns="settingTable.columns" :data="table.columns"  
+                :columns="settingTable.columns" :data="columns"  
                 height=400>
             </Table>
             <div slot="footer">
@@ -145,6 +144,7 @@
             var vm=this;
             return {
                 table:{},
+                userMap:{},
                 pager:{},
                 selectItems:[],
                 deleteOp:{
@@ -169,7 +169,7 @@
                             if(params.row.type=='selection'){
                                 return vm.$t('common.checkbox')
                             }
-                            return params.row.title;
+                            return h('label',params.row.title);
                         }},
                         {key:'hidden',title:vm.$t('common.show'),width:100,align:'center',render:(h,params)=>{
                             var type='checkmark',color='green';
@@ -209,21 +209,32 @@
         },
         computed:{
             columns(){
-                var columns=this.table.columns || [];
+                var vm=this;
+                var columns=[];
+                if(this.table.columns && this.table.columns.length>0){
+                    this.table.columns.forEach(column=>{
+                        column.tooltip=true;
+                        columns.push(column);
+                    });
+                }
                 if(this.table.defaultColumn){
                     columns.push(
-                        {key:'createUserName',title:this.$t('common.createdBy'),width:150,ellipsis:true,hidden:true},
-                        {key:'creationDate',title:this.$t('common.creationDate'),width:160,ellipsis:true,hidden:false},
-                        {key:'lastUpdateUserName',title:this.$t('common.lastUpdatedBy'),width:150,ellipsis:true,hidden:true},
-                        {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:160,ellipsis:true,hidden:false}
+                        {key:'createByUserName',title:this.$t('common.createdBy'),width:150,tooltip:true,hidden:true,render:(h,params)=>{
+                            return vm.$JFUtil.formatUser(h,params.row.createBy,vm.userMap);
+                        }},
+                        {key:'creationDate',title:this.$t('common.creationDate'),width:160,tooltip:true,hidden:true},
+                        {key:'lastUpdateByUserName',title:this.$t('common.lastUpdatedBy'),width:150,tooltip:true,hidden:true,render:(h,params)=>{
+                            return vm.$JFUtil.formatUser(h,params.row.lastUpdateBy,vm.userMap);
+                        }},
+                        {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:160,tooltip:true,hidden:true}
                     );
-                    if(columns.length>8){
-                        columns.forEach(column=>{
-                            if(!column.width){
-                                column.width=250;
-                            }
-                        });
-                    }
+                }
+                if(columns.length>12){
+                    columns.forEach(column=>{
+                        if(!column.width){
+                            column.width=250;
+                        }
+                    });
                 }
                 return columns;
             },
@@ -259,6 +270,7 @@
                         vue.table.loading=false;
                         vue.table.data=result.result ||[];
                         vue.pager=result.pageVO;
+                        vue.loadUserInfo();
                     },function(error){
                         vue.table.loading=false;
                     });
@@ -367,6 +379,25 @@
             },
             openSetting(){
                 this.table.settingShow=true;
+            },
+            loadUserInfo(){
+                var vm=this;
+                var userColumns=(this.table.defaultUserColumns || []).concat(this.table.userColumns || []);
+                if(userColumns.length>0){
+                    var userIds=[];
+                    (this.table.data || []).forEach(rowData=>{
+                        userColumns.forEach(col=>{
+                            if(rowData[col] && userIds.indexOf(rowData[col])<0){
+                                userIds.push(rowData[col]);
+                            }
+                        });
+                    });
+                    if(userIds.length>0){
+                        vm.$JFFetch.doPost('jfcloud/jf-cloud-sso/sso/user/map',userIds,function(result){
+                            vm.userMap=result || {};
+                        });
+                    }
+                }
             }
         },
         created(){
@@ -374,7 +405,7 @@
             //设置表格配置
             this.table=Object.assign({},{
                 columns:[],data:[],loading:false,setting:true,settingShow:false,defaultColumn:true,
-                showPager:true,noDataText:this.$t('common.noDataText')
+                showPager:true,noDataText:this.$t('common.noDataText'),defaultUserColumns:['createBy','lastUpdateBy']
             },options.table);
 
             //设置分页配置

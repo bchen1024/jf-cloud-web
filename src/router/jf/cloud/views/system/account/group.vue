@@ -22,11 +22,13 @@
                                     },this.$t('common.edit'))
                                 ]);
                             }},
-                            {key:'groupCode',title:vm.$t('group.code'),width:120,ellipsis:true,condition:true},
-                            {key:'groupName',title:vm.$t('group.name'),width:150,ellipsis:true,condition:true},
+                            {key:'groupCode',title:vm.$t('group.code'),width:120,condition:true},
+                            {key:'groupName',title:vm.$t('group.name'),width:150,condition:true},
                             {key:'applyStatus',title:vm.$t('common.applyStatus'),width:100},
-                            {key:'groupOwner',title:vm.$t('common.owner'),width:120,ellipsis:true},
-                            {key:'groupDesc',title:vm.$t('common.desc'),ellipsis:true}
+                            {key:'groupOwner',title:vm.$t('common.owner'),width:120,render:(h,params)=>{
+                                return vm.$JFUtil.formatUser(h,params.row.groupOwner,vm.$refs.gridGroup.userMap);
+                            }},
+                            {key:'groupDesc',title:vm.$t('common.desc')}
                         ]
                     },
                     search:{
@@ -58,7 +60,7 @@
                         defaultValue:{applyStatus:'N'}
                     },
                     toolbars:[
-                        {refs:'addGroup',title:vm.$t('common.add'),icon:'plus',add:true},
+                        {refs:'addGroup',title:vm.$t('common.add'),icon:'ios-add',add:true},
                         {refs:'deleteGroup',title:vm.$t('common.delete'),icon:'ios-trash-outline',type:'error',selection:true,delete:true}
                     ]
                 }

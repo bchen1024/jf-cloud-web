@@ -22,13 +22,13 @@
                                     },this.$t('common.edit'))
                                 ]);
                             }},
-                            {key:'propertyKey',title:vm.$t('property.key'),width:150,ellipsis:true,condition:true,fixed:'left'},
-                            {key:'propertyValue',title:vm.$t('property.value'),width:150,ellipsis:true,condition:true},
-                            {key:'propertyType',title:vm.$t('property.type'),width:120,ellipsis:true},
-                            {key:'attr1',title:vm.$t('common.attr1'),width:120,ellipsis:true},
-                            {key:'attr2',title:vm.$t('common.attr2'),width:120,ellipsis:true},
-                            {key:'attr3',title:vm.$t('common.attr3'),width:120,ellipsis:true},
-                            {key:'propertyDesc',title:vm.$t('common.desc'),ellipsis:true}
+                            {key:'propertyKey',title:vm.$t('property.key'),width:150,condition:true,fixed:'left'},
+                            {key:'propertyValue',title:vm.$t('property.value'),width:150,condition:true},
+                            {key:'propertyType',title:vm.$t('property.type'),width:120},
+                            {key:'attr1',title:vm.$t('common.attr1'),width:120},
+                            {key:'attr2',title:vm.$t('common.attr2'),width:120},
+                            {key:'attr3',title:vm.$t('common.attr3'),width:120},
+                            {key:'propertyDesc',title:vm.$t('common.desc')}
                         ]
                     },
                     search:{
@@ -58,7 +58,7 @@
                         }
                     },
                     toolbars:[
-                        {refs:'addProperty',title:vm.$t('common.add'),icon:'plus',add:true},
+                        {refs:'addProperty',title:vm.$t('common.add'),icon:'ios-add',add:true},
                         {refs:'deleteProperty',title:vm.$t('common.delete'),
                             icon:'ios-trash-outline',type:'error',
                             selection:true,delete:true

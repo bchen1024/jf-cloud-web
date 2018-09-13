@@ -67,7 +67,8 @@ export default{
         loginPassword:'登录密码',
         forgetPassword:'忘记密码',
         login:'登录',
-        loginError:'登录发生异常'
+        loginError:'登录发生异常',
+        logoutConfirm:'你确定要退出系统吗？'
     },
     menu:{
         home:'首页',
@@ -99,7 +100,9 @@ export default{
         applyPermission:'权限申请',
         importOrExport:'导入&导出',
         workTodo:'工作代办',
-        person:'个人中心'
+        person:'个人中心',
+        login:'登录',
+        auditLog:'审计日志'
     },
     role:{
         code:'角色编码',

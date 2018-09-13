@@ -83,8 +83,8 @@
 </script>
 <style scoped>
     .login-card{
-        width:400px;
-        margin:100px auto;
+        width:500px;
+        margin:150px auto;
     }
     .login-error-msg{
         color:red;

@@ -10,17 +10,19 @@ export default {
                 {name:'user'},
                 {name:'role'},
                 {name:'group'},
-                {name:'permission'}
+                {name:'permission'},
+                {name:'app'}
             ]},
             {name:'config',children:[
                 {name:'property'},
                 {name:'lookup'},
-                {name:'i18n'},
-                {name:'app'}
+                {name:'i18n'}
+               
             ]},
             {name:'monitor',children:[
                 {name:'import'},
-                {name:'export'}
+                {name:'export'},
+                {name:'auditLog'}
             ]}
         ]
     },
@@ -44,6 +46,11 @@ export default {
         component: (resolve) => require(['./views/system/account/permission.vue'], resolve),
         parent:'system'
     },
+    app:{
+        path:appPath+'system/account/app',
+        component: (resolve) => require(['./views/system/account/app.vue'], resolve),
+        parent:'system'
+    },
     property:{
         path:appPath+'system/config/property',
         component: (resolve) => require(['./views/system/config/property.vue'], resolve),
@@ -59,9 +66,9 @@ export default {
         component: (resolve) => require(['./views/system/config/i18n.vue'], resolve),
         parent:'system'
     },
-    app:{
-        path:appPath+'system/config/app',
-        component: (resolve) => require(['./views/system/config/app.vue'], resolve),
+    auditLog:{
+        path:appPath+'system/monitor/auditLog',
+        component: (resolve) => require(['./views/system/monitor/auditLog.vue'], resolve),
         parent:'system'
     }
 };

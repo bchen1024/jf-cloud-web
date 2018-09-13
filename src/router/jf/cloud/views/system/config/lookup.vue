@@ -22,11 +22,11 @@
                                     },this.$t('common.edit'))
                                 ]);
                             }},
-                            {key:'codeNo',title:vm.$t('code.no'),width:150,tooltip:true,condition:true},
-                            {key:'codeName',title:vm.$t('code.name'),width:150,tooltip:true,condition:true},
-                            {key:'codeType',title:vm.$t('code.type'),width:120,tooltip:true},
-                            {key:'codeParent',title:vm.$t('code.parent'),width:150,tooltip:true},
-                            {key:'codeDesc',title:vm.$t('common.desc'),tooltip:true},
+                            {key:'codeNo',title:vm.$t('code.no'),width:150,condition:true},
+                            {key:'codeName',title:vm.$t('code.name'),width:150,condition:true},
+                            {key:'codeType',title:vm.$t('code.type'),width:120},
+                            {key:'codeParent',title:vm.$t('code.parent'),width:150},
+                            {key:'codeDesc',title:vm.$t('common.desc')},
                         ]
                     },
                     search:{
@@ -53,7 +53,7 @@
                         }
                     },
                     toolbars:[
-                        {refs:'addLookup',title:vm.$t('common.add'),icon:'plus',add:true},
+                        {refs:'addLookup',title:vm.$t('common.add'),icon:'ios-add',add:true},
                         {refs:'deleteLookup',title:vm.$t('common.delete'),
                             icon:'ios-trash-outline',type:'error',
                             selection:true,delete:true
