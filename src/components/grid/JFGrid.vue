@@ -62,6 +62,7 @@
             :total="pager.total" 
             :page-size="pager.pageSize" 
             :current="pager.curPage" 
+            :page-size-opts="pager.pageList"
             placement="top" show-elevator show-sizer show-total
             class="table-pager">
         </Page>
@@ -269,7 +270,7 @@
                     vue.$JFFetch.doRequest(search.method,search.url,param,function(result){
                         vue.table.loading=false;
                         vue.table.data=result.result ||[];
-                        vue.pager=result.pageVO;
+                        Object.assign(vue.pager,result.pageVO);
                         vue.loadUserInfo();
                     },function(error){
                         vue.table.loading=false;
@@ -410,7 +411,7 @@
 
             //设置分页配置
             this.pager=Object.assign({},{
-                total:0,pageSize:10,curPage:1
+                total:0,pageSize:15,curPage:1,pageList:[10,15,30,50,100,200]
             },options.pager);
 
             //工具栏

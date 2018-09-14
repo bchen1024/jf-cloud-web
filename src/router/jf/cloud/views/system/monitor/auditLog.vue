@@ -17,7 +17,13 @@
                             {key:'logStartTime',title:vm.$t('common.startTime'),width:150},
                             {key:'logEndTime',title:vm.$t('common.endTime'),width:150},
                             {key:'logCost',title:vm.$t('common.cost'),width:120},
-                            {key:'logUrl',title:vm.$t('auditLog.url'),width:250}
+                            {key:'logUrl',title:vm.$t('auditLog.url'),width:300},
+                            {key:'logFullName',title:vm.$t('auditLog.fullName'),width:200},
+                            {key:'logModul',title:vm.$t('auditLog.modul'),width:150},
+                            {key:'logMethod',title:vm.$t('auditLog.method'),width:150},
+                            {key:'logMessage',title:vm.$t('auditLog.message'),width:300},
+                            {key:'logClient',title:vm.$t('auditLog.client'),width:120},
+                            {key:'logType',title:vm.$t('auditLog.type'),width:150}
                         ]
                     },
                     search:{

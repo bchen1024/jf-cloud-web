@@ -64,5 +64,13 @@ export default{
             i18nList.push(i18nEN);
         }
         return i18nList;
+    },
+    switchLanguage(lang){
+        const language = window.localStorage.getItem('currentLanguage') || 'zh_CN';
+        if(lang==language){
+            return;
+        }
+        localStorage.setItem('currentLanguage',lang);
+        document.location.reload();
     }
 };

@@ -1,7 +1,6 @@
 export default{
     common:{
         appName:'JF Cloud',
-        home:'Home',
         person:'Person',
         logout:'Logout',
         search:'Search',
@@ -12,15 +11,21 @@ export default{
         desc:'Desc',
         edit:'Edit',
         delete:'Delete',
-        attr1:'属性1',
-        attr2:'属性2',
-        attr3:'属性3',
-        status:'状态',
-        publish:'发布',
-        operate:'操作',
-        lastUpdatedBy:'最后更新人',
-        lastUpdationDate:'最后更新时间',
-        logoutConfirm:'Are you sure you want to quit the system?'
+        attr1:'Attr1',
+        attr2:'Attr2',
+        attr3:'Attr3',
+        status:'Status',
+        publish:'Publish',
+        operate:'Operate',
+        createdBy:'Creater',
+        creationDate:'Creation Date',
+        lastUpdatedBy:'Last Updater',
+        lastUpdationDate:'Last Update Date',
+        logoutConfirm:'Are you sure you want to quit the system?',
+        curPath:'Current Path:',
+        add:'Add',
+        zh_CN:'Chinese',
+        en_US:'English'
     },
     menu:{
         system:'System',
@@ -37,7 +42,10 @@ export default{
         i18n:'I18n',
         monitor:'Monitor',
         import:'Import',
-        export:'Export'
+        export:'Export',
+        app:'App',
+        home:'Home',
+        auditLog:'Audit Log'
     },
     property:{
         key:'Property Key',

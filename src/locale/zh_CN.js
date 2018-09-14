@@ -68,7 +68,14 @@ export default{
         forgetPassword:'忘记密码',
         login:'登录',
         loginError:'登录发生异常',
-        logoutConfirm:'你确定要退出系统吗？'
+        logoutConfirm:'你确定要退出系统吗？',
+        startTime:'开始时间',
+        endTime:'结束时间',
+        host:'主机',
+        ip:'IP地址',
+        cost:'耗时',
+        zh_CN:'中文',
+        en_US:'英文'
     },
     menu:{
         home:'首页',
@@ -138,5 +145,10 @@ export default{
         employeeNo:'员工号',
         type:'用户类型',
         timeout:'密码失效（天）'
+    },
+    auditLog:{
+        time:'审计时间',
+        account:'审计账号',
+        url:'请求URL'
     }
 };

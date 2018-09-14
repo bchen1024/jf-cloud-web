@@ -32,6 +32,15 @@
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
+                <Dropdown @on-click="$JFI18n.switchLanguage" class='layout-menu-dropdown'>
+                        <a href="javascript:void(0)">
+                            {{$t('common.'+$lang)}} 
+                        </a>
+                        <DropdownMenu slot="list">
+                            <DropdownItem name='zh_CN'>{{$t('common.zh_CN')}}</DropdownItem>
+                            <DropdownItem name='en_US'>{{$t('common.en_US')}}</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
                 <template v-if="$store.state.currentStore">
                     <Dropdown @on-click="personClick" class='layout-menu-dropdown'>
                         <a href="javascript:void(0)">
@@ -52,7 +61,7 @@
                 <Breadcrumb class="layout-breadcrumb">
                     <template>{{$t('common.curPath')}}</template>
                     <BreadcrumbItem>
-                        {{$t('common.home')}}
+                        {{$t('menu.home')}}
                     </BreadcrumbItem>
                     <BreadcrumbItem  v-for="breadcrumb in $store.state.menuStore.currentBreadcrumbs" :key="breadcrumb.name">
                         <template v-if="breadcrumb.path">
@@ -160,7 +169,7 @@
         height: 100vh;
     }
     .layout-logo{
-        width: 199px;
+        width: 210px;
         height: 40px;
         line-height: 40px;
         color:#fff;
