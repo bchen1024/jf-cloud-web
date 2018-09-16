@@ -29,21 +29,23 @@
                 </Dropdown>
             </template>
             <!--搜索框-->
-            <Input v-if="table.queryFields.length>0"
-                    icon="ios-search"
-                    autofocus
+            <template v-if="table.queryFields.length>0">
+                <Input autofocus clearable
                     class="jf-toolbar-item jf-input-search"
                     :placeholder="$t('common.queryTip')"
                     :disabled="table.loading"
                     v-model="searchOp.queryValue"
-                    @on-click="load()"
                     @on-enter="load()">
                     <Select v-model="searchOp.queryKey" slot="prepend" style="width:100px;">
                         <Option v-for="field in table.queryFields" :key="field.key" :value="field.key">
                             {{field.title}}
                         </Option>
                     </Select>
-            </Input>
+                </Input>
+                <Button type="primary" class="jf-toolbar-item" icon="ios-search" @click="load()">
+                    {{$t("common.search")}}
+                </Button>
+            </template>
             <span v-if="table.setting" style="margin-start:auto">
                 <Icon type="ios-settings-outline" size="20" 
                  style="margin-top:12px;margin-right:3px;cursor: pointer;" :title="$t('common.setting')" @click.native="openSetting"></Icon>
@@ -96,9 +98,10 @@
         </Modal>
 
         <!--表单设置modal-->
-        <Modal v-if="form.items && form.items.length>0" v-model="form.show" :width="form.width || 600" 
+        <Drawer v-if="form.items && form.items.length>0" v-model="form.show" :width="form.width || 600" 
             :title="form.title"
-            :styles="{top: '48px'}">
+            :mask-closable="false"
+            :styles="styles">
             <Form :ref="form.ref" :model="form.data || {}" :rules="form.rules || {}" 
                 :label-width="form.labelWidth || 100" :inline="form.inline || false">
                 <Form-item v-for='item in form.items' :key='item.key' :label="item.title" :prop="item.key"
@@ -129,12 +132,12 @@
                     </template>
                 </Form-item>
             </Form>
-            <div slot="footer">
+            <div class="jf-drawer-footer">
                 <Button type="primary" @click="doSave" :loading="form.saveLoding">{{$t('common.save')}}</Button>
                 <Button type="error" @click="form.show=false">{{$t('common.cancel')}}</Button>
                 <Button type="info" @click="doReset" :loading="form.loading">{{$t('common.reset')}}</Button>
             </div>
-        </Modal>
+        </Drawer>
     </div>
 </template>
 <script>
@@ -161,6 +164,12 @@
                     queryKey:"",
                     queryValue:"",
                     method:"post"
+                },
+                styles: {
+                    height: 'calc(100% - 55px)',
+                    overflow: 'auto',
+                    paddingBottom: '53px',
+                    position: 'static'
                 },
                 form:{},
                 settingTable:{
@@ -212,6 +221,16 @@
             columns(){
                 var vm=this;
                 var columns=[];
+                if(vm.table.showSelection){
+                    columns.push(
+                        {type:'selection',width:60,align:'center'}
+                    );
+                }
+                if(vm.table.showIndex){
+                    columns.push(
+                        {type: 'index',width: 60,align:'center'}
+                    );
+                }
                 if(this.table.columns && this.table.columns.length>0){
                     this.table.columns.forEach(column=>{
                         column.tooltip=true;
@@ -220,14 +239,14 @@
                 }
                 if(this.table.defaultColumn){
                     columns.push(
-                        {key:'createByUserName',title:this.$t('common.createdBy'),width:150,tooltip:true,hidden:true,render:(h,params)=>{
+                        {key:'createByUserName',title:this.$t('common.createdBy'),width:150,tooltip:true,render:(h,params)=>{
                             return vm.$JFUtil.formatUser(h,params.row.createBy,vm.userMap);
                         }},
-                        {key:'creationDate',title:this.$t('common.creationDate'),width:160,tooltip:true,hidden:true},
-                        {key:'lastUpdateByUserName',title:this.$t('common.lastUpdatedBy'),width:150,tooltip:true,hidden:true,render:(h,params)=>{
+                        {key:'creationDate',title:this.$t('common.creationDate'),width:155,tooltip:true,align: 'center'},
+                        {key:'lastUpdateByUserName',title:this.$t('common.lastUpdatedBy'),width:150,tooltip:true,render:(h,params)=>{
                             return vm.$JFUtil.formatUser(h,params.row.lastUpdateBy,vm.userMap);
                         }},
-                        {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:160,tooltip:true,hidden:true}
+                        {key:'lastUpdationDate',title:this.$t('common.lastUpdationDate'),width:155,tooltip:true,align: 'center'}
                     );
                 }
                 if(columns.length>12){
@@ -405,7 +424,7 @@
             var options=this.gridOptions || {};
             //设置表格配置
             this.table=Object.assign({},{
-                columns:[],data:[],loading:false,setting:true,settingShow:false,defaultColumn:true,
+                columns:[],data:[],loading:false,setting:true,settingShow:false,defaultColumn:true,showIndex:true,showSelection:true,
                 showPager:true,noDataText:this.$t('common.noDataText'),defaultUserColumns:['createBy','lastUpdateBy']
             },options.table);
 
@@ -427,14 +446,14 @@
             this.form=Object.assign({},{
                 show:false,items:[],title:this.$t('common.add'),data:{},rules:{},saveLoading:false,loading:false
             },options.form);
-            if(this.form.items.length>6){
+            /*if(this.form.items.length>6){
                 this.form.inline=true;
             }
             if(this.form.items.length>9){
                 this.form.width=900;
             }if(this.form.items.length>18){
                 this.form.width=1200;
-            }
+            }*/
 
             //查询
             var queryFields=[];
@@ -465,5 +484,15 @@
     }
     .jf-input-search{
         width:360px;
+    }
+    .jf-drawer-footer{
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-top: 1px solid #e8e8e8;
+        padding: 10px 16px;
+        text-align: right;
+        background: #fff;
     }
 </style>

@@ -9,7 +9,6 @@
                 grid:{
                     table:{
                         columns:[
-                            {type:'selection',width:60,align:'center'},
                             {key:'operate',title:vm.$t('common.operate'),width:120,align:'center',render: (h, params) => {
                                 return h('div', [
                                     h('Button', {
@@ -48,9 +47,9 @@
                             {key:'appDesc',title:vm.$t('common.desc'),type:'textarea'}
                         ],
                         rules:{
-                            appCode:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            appName:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            appOwner:{required: true, message: 'The name cannot be empty', trigger: 'blur'}
+                            appCode:{required: true,message:vm.$t('rules.required')},
+                            appName:{required: true,message:vm.$t('rules.required'), trigger: 'blur'},
+                            appOwner:{required: true,message:vm.$t('rules.required'), trigger: 'blur'}
                         },
                         defaultValue:{removeCode:true}
                     },

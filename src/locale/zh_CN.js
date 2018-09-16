@@ -149,6 +149,15 @@ export default{
     auditLog:{
         time:'审计时间',
         account:'审计账号',
-        url:'请求URL'
+        url:'请求URL',
+        fullName:'Class路径',
+        modul:'模块',
+        method:'方法名',
+        message:'消息',
+        client:'客户端',
+        type:'审计类型'
+    },
+    rules:{
+        required:'该值不能为空'
     }
 };

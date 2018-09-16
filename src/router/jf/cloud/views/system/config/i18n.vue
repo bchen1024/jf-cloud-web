@@ -24,7 +24,6 @@
                 grid:{
                     table:{
                         columns:[
-                            {type:'selection',width:60,align:'center'},
                             {key:'operate',title:vm.$t('common.operate'),width:120,align:'center',render: (h, params) => {
                                 return h('div', [
                                     h('Button', {
@@ -58,9 +57,9 @@
                             {key:'i18nEN',title:vm.$t('i18n.en'),type:'textarea'}
                         ],
                         rules:{
-                            i18nKey:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            i18nCN:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            i18nEN:{required: true, message: 'The name cannot be empty', trigger: 'blur'}
+                            i18nKey:{required: true,message:vm.$t('rules.required'), trigger: 'blur'},
+                            i18nCN:{required: true,message:vm.$t('rules.required'), trigger: 'blur'},
+                            i18nEN:{required: true,message:vm.$t('rules.required'), trigger: 'blur'}
                         }
                     },
                     toolbars:[

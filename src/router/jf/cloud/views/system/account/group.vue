@@ -9,7 +9,6 @@
                 grid:{
                     table:{
                         columns:[
-                            {type:'selection',width:60,align:'center'},
                             {key:'operate',title:vm.$t('common.operate'),width:120,align:'center',render: (h, params) => {
                                 return h('div', [
                                     h('Button', {
@@ -52,10 +51,10 @@
                             {key:'groupDesc',title:vm.$t('common.desc'),type:'textarea'}
                         ],
                         rules:{
-                            groupCode:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            groupName:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            applyStatus:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            groupOwner:{required: true, message: 'The name cannot be empty', trigger: 'blur'}
+                            groupCode:{required: true,message:vm.$t('rules.required'), trigger: 'blur'},
+                            groupName:{required: true,message:vm.$t('rules.required'), trigger: 'blur'},
+                            applyStatus:{required: true,message:vm.$t('rules.required'), trigger: 'blur'},
+                            groupOwner:{required: true,message:vm.$t('rules.required'), trigger: 'blur'}
                         },
                         defaultValue:{applyStatus:'N'}
                     },

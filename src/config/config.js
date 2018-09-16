@@ -2,7 +2,7 @@ import Env from './env';
 
 let config = {
     env: Env,
-    serviceUrl:'http://localhost:8888/',
+    serviceUrl:'http://localhost:1000/',
     uploadUrl:'http://127.0.0.1:8888/jf/servlet/upload',
     downloadUrl:'http://127.0.0.1:8888/jf/servlet/download',
     appCode:'jf-cloud-platform'

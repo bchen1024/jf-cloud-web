@@ -9,7 +9,6 @@
                 grid:{
                     table:{
                         columns:[
-                            {type:'selection',width:60,align:'center',fixed:'left'},
                             {key:'operate',title:vm.$t('common.operate'),width:120,fixed:'left',align:'center',render: (h, params) => {
                                 return h('div', [
                                     h('Button', {
@@ -48,13 +47,25 @@
                             {key:'attr1',title:vm.$t('common.attr1')},
                             {key:'attr2',title:vm.$t('common.attr2')},
                             {key:'attr3',title:vm.$t('common.attr3')},
+                            {key:'propertyKey1',title:vm.$t('property.key')},
+                            {key:'propertyValue1',title:vm.$t('property.value')},
+                            {key:'propertyType1',title:vm.$t('property.type')},
+                            {key:'attr11',title:vm.$t('common.attr1')},
+                            {key:'attr21',title:vm.$t('common.attr2')},
+                            {key:'attr31',title:vm.$t('common.attr3')},
+                            {key:'propertyKey12',title:vm.$t('property.key')},
+                            {key:'propertyValue12',title:vm.$t('property.value')},
+                            {key:'propertyType12',title:vm.$t('property.type')},
+                            {key:'attr112',title:vm.$t('common.attr1')},
+                            {key:'attr212',title:vm.$t('common.attr2')},
+                            {key:'attr312',title:vm.$t('common.attr3')},
                             {key:'propertyDesc',title:vm.$t('common.desc'),type:'textarea'},
 
                         ],
                         rules:{
-                            propertyKey:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            propertyValue:{required: true, message: 'The name cannot be empty', trigger: 'blur'},
-                            propertyType:{required: true, message: 'The name cannot be empty', trigger: 'blur'}
+                            propertyKey:{required: true,message:vm.$t('rules.required'), trigger: 'blur'},
+                            propertyValue:{required: true,message:vm.$t('rules.required'), trigger: 'blur'},
+                            propertyType:{required: true,message:vm.$t('rules.required'), trigger: 'blur'}
                         }
                     },
                     toolbars:[

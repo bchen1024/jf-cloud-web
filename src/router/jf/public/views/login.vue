@@ -14,7 +14,7 @@
             </FormItem>
             <FormItem prop="password">
                 <Input type="password" v-model="formInline.password" :placeholder="$t('common.loginPassword')">
-                    <Icon type="ios-locked-outline" slot="prepend"></Icon>
+                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <div class='login-forget-panel'>
