@@ -1,6 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const resolve = dir => {
+  return path.join(__dirname, dir)
+}
 
 module.exports = {
     entry: {
@@ -82,7 +85,9 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            'vue': 'vue/dist/vue.esm.js'
+            'vue': 'vue/dist/vue.esm.js',
+            '@':resolve('src'),
+            '@c':resolve('src/components'),
         }
     }
 };

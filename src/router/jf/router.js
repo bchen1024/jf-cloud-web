@@ -1,3 +1,0 @@
-import utils from './utils.js';
- 
-export default utils.getRouters();
