@@ -9,7 +9,8 @@
             <Dropdown 
                 v-if="bar.items && bar.items.length>0" 
                 :key="bar.refs"
-                @on-click="bar.click">
+                @on-click="bar.click"
+                transfer>
                 <Button 
                     :type="bar.type || 'info'"  
                     class="jf-toolbar-item">

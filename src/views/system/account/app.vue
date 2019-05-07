@@ -30,35 +30,13 @@
                                     }
                                 },
                                 {type:'Icon',props:{type: 'ios-people'},attrs:{title:vm.$t('app.userList')},click:(params)=>{
-                                    vm.userListTab=true;
+                                    /*vm.userListTab=true;
                                     vm.curTab='userList';
                                     vm.userListFormOp.defalutValue=params.row;
-                                    bus.$emit(vm.userListFormOp.ref+'InitForm',params.row);
+                                    bus.$emit(vm.userListFormOp.ref+'InitForm',params.row);*/
                                 }},
-                                {type:'Icon',props:{type: 'ios-play'},attrs:{title:vm.$t('app.checkStatus')},
-                                    click:(params)=>{
-                                        request({
-                                            url:config.serviceUrl+'jfcloud/'+params.row.appCode+params.row.appContextPath+'/common/checkAppStatus',
-                                            method:'get'
-                                        }).then(result=>{
-                                            if(result=='Y'){
-                                                vm.$Message.success(vm.$t('common.testSuccess'));
-                                            }else{
-                                                vm.$Message.error({
-                                                    content:vm.$t('common.testFail'),
-                                                    duration:6
-                                                });
-                                            }
-                                        }).catch(error => {
-                                            vm.$Message.error({
-                                                content:vm.$t('common.testFail'),
-                                                duration:6
-                                            });
-                                        });
-                                    }
-                                },
                                 {type:'Icon',props:{type: 'md-sync'},attrs:{title:vm.$t('permission.sync')},click:()=>{
-                                        
+                                    
                                 }},
                                 {type:'Icon',props:{type: 'md-document',color:'#89bf04'},attrs:{title:vm.$t('common.swagger')},filter:(params)=>{
                                     return params.row.appCode!='jf-cloud-zuul';

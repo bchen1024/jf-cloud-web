@@ -22,7 +22,7 @@ export default{
   getCurrent() {
     return request({
       serviceModule:serviceModule,
-      url:serviceUrl+'current',
+      url:serviceUrl+'security/user/current',
       method: 'post'
     });
   }

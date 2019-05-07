@@ -7,6 +7,7 @@ export default{
   findPage(data){
     return request({
       serviceModule:serviceModule,
+      moduleName:this.request.name,
       url:serviceUrl+'page',
       method:'post',
       data:data

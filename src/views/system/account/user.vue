@@ -35,8 +35,8 @@
                             {key:'userEmail',title:vm.$t('common.email'),format:'mail'},
                             {key:'employeeNo',title:vm.$t('user.employeeNo'),width:120,condition:true},
                             {key:'userType',title:vm.$t('user.type'),width:100},
-                            {key:'userStatus',title:vm.$t('user.status'),width:100,format:'status',align:'center'},
-                            {key:'pwdError',title:vm.$t('user.pwdError'),width:120},
+                            {key:'userStatus',title:vm.$t('user.status'),width:100,align:'center'},
+                            //{key:'pwdError',title:vm.$t('user.pwdError'),width:120},
                             {key:'lockTime',title:vm.$t('user.lockTime'),width:155},
                             {key:'pwdUpdateTime',title:vm.$t('user.pwdUpdateTime'),width:155}
                         ]

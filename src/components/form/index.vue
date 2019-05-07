@@ -131,7 +131,7 @@
                                 vm._save(requestObj);
                             }else if(saveOp.updateRequest && vm.data[op.primaryKey]){
                                 vm._save(saveOp.updateRequest(vm.data));
-                            }else if(saveOp.createRequest){
+                            }else if(saveOp.createRequest && !vm.data[op.primaryKey]){
                                 vm._save(saveOp.createRequest(vm.data));
                             }
                         }

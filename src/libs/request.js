@@ -1,5 +1,5 @@
 import axios from 'axios';
-import iView from 'iview';
+import {Modal} from 'iview';
 import Config from '@/config/config.js';
 import {getToken,getCurrentLanguage} from '@/libs/util.js';
 
@@ -47,6 +47,10 @@ service.interceptors.response.use(
   },
   error => {
     if(error.response){
+      Modal.error({
+        title: 'Error',
+        content: error.response.data.message
+      });
       return Promise.reject(error.response.data);
     }else{
       return Promise.reject(error);
